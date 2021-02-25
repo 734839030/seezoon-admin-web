@@ -1,9 +1,11 @@
 <template>
   <div :class="prefixCls" class="relative w-full h-full px-4">
+    <!--
     <AppLocalePicker
       class="absolute top-4 right-4 enter-x text-white xl:text-gray-600"
       :showText="false"
     />
+    -->
 
     <span class="-enter-x xl:hidden">
       <AppLogo :alwaysShowTitle="true" />
