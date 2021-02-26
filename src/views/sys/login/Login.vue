@@ -2,7 +2,8 @@
   <div :class="prefixCls" class="relative w-full h-full px-4">
     <!--   暂时不需要-->
     <AppLocalePicker
-      class="absolute top-4 right-4 enter-x text-white xl:text-gray-600 hidden"
+      v-if="false"
+      class="absolute top-4 right-4 enter-x text-white xl:text-gray-600"
       :showText="false"
     />
 

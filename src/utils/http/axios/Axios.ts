@@ -164,6 +164,41 @@ export class VAxios {
     };
   }
 
+  postForm<T = any>(url: string, params: any): Promise<T> {
+    const config: AxiosRequestConfig = {
+      url: url,
+      data: qs.stringify(params),
+      method: RequestEnum.POST,
+    };
+    const options: RequestOptions = { errorMessageMode: 'message' };
+    return this.request(config, options);
+  }
+
+  postJson<T = any>(url: string, params: any): Promise<T> {
+    const config: AxiosRequestConfig = {
+      url: url,
+      data: params,
+      method: RequestEnum.POST,
+    };
+    const options: RequestOptions = { errorMessageMode: 'message' };
+    return this.request(config, options);
+  }
+
+  /**
+   *  params 支持json ,拼接字符串接rest 类字符串
+   * @param url
+   * @param params
+   */
+  get<T = any>(url: string, params?: any): Promise<T> {
+    const config: AxiosRequestConfig = {
+      url: url,
+      params: params,
+      method: RequestEnum.GET,
+    };
+    const options: RequestOptions = { errorMessageMode: 'message' };
+    return this.request(config, options);
+  }
+
   request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     let conf: AxiosRequestConfig = cloneDeep(config);
     const transform = this.getTransform();

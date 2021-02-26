@@ -5,8 +5,6 @@ import {
   GetUserInfoByUserIdParams,
   GetUserInfoByUserIdModel,
 } from './model/userModel';
-import { ErrorMessageMode } from '/@/utils/http/axios/types';
-import { ContentTypeEnum } from '/@/enums/httpEnum';
 
 enum Api {
   Login = '/login',
@@ -17,19 +15,8 @@ enum Api {
 /**
  * @description: user login api
  */
-export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'message') {
-  debugger;
-  return defHttp.request<LoginResultModel>(
-    {
-      url: Api.Login,
-      method: 'POST',
-      data: params,
-      headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
-    },
-    {
-      errorMessageMode: mode,
-    }
-  );
+export function loginApi(params: LoginParams) {
+  return defHttp.postForm<LoginResultModel>(Api.Login, params);
 }
 
 /**

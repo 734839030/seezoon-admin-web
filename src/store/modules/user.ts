@@ -1,7 +1,7 @@
 import type {
   LoginParams,
   GetUserInfoByUserIdModel,
-  GetUserInfoByUserIdParams,
+  //GetUserInfoByUserIdParams,
 } from '/@/api/sys/model/userModel';
 
 import store from '/@/store/index';
@@ -16,12 +16,14 @@ import { useMessage } from '/@/hooks/web/useMessage';
 
 import router from '/@/router';
 
-import { loginApi, getUserInfoById } from '/@/api/sys/user';
+import { getUserInfoById } from '/@/api/sys/user';
 
 import { setLocal, getLocal, getSession, setSession } from '/@/utils/cache/persistent';
 import { useProjectSetting } from '/@/hooks/setting';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
+import { defHttp } from '/@/utils/http/axios';
+//import { LoginResultModel } from '/@/api/sys/model/userModel';
 
 export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
 
@@ -101,29 +103,34 @@ class User extends VuexModule {
     }
   ): Promise<GetUserInfoByUserIdModel | null> {
     try {
-      const { goHome = true, mode, ...loginParams } = params;
-      const data = await loginApi(loginParams, mode);
-      const { token, userId } = data;
+      const { goHome = true, ...loginParams } = params;
+      // 同步登陆
+      await defHttp.postForm('/login', loginParams);
+      //const data = await loginApi(loginParams);
+      //const { token, userId } = data;
       // save token
-      this.commitTokenState(token);
+      //this.commitTokenState(token);
 
       // get user info
-      const userInfo = await this.getUserInfoAction({ userId });
+      // const userInfo = await this.getUserInfoAction({ userId });
+      await this.getUserInfoAction();
 
       goHome && (await router.replace(PageEnum.BASE_HOME));
-      return userInfo;
+      return null;
     } catch (error) {
       return null;
     }
   }
 
   @Action
-  async getUserInfoAction({ userId }: GetUserInfoByUserIdParams) {
+  async getUserInfoAction() {
+    const userId = 1;
+    // 获取菜单
     const userInfo = await getUserInfoById({ userId });
-    const { roles } = userInfo;
-    const roleList = roles.map((item) => item.value) as RoleEnum[];
+    //const { roles } = userInfo;
+    //const roleList = roles.map((item) => item.value) as RoleEnum[];
     this.commitUserInfoState(userInfo);
-    this.commitRoleListState(roleList);
+    // this.commitRoleListState(roleList);
     return userInfo;
   }
 

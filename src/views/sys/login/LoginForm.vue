@@ -119,7 +119,7 @@
     },
     setup() {
       const { t } = useI18n();
-      const { notification } = useMessage();
+      // const { notification } = useMessage();
       const { prefixCls } = useDesign('login');
 
       const { setLoginState, getLoginState } = useLoginState();
@@ -144,7 +144,7 @@
         try {
           loading.value = true;
           /*const userInfo = await */
-          userStore.login(
+          await userStore.login(
             toRaw({
               username: data.username,
               password: data.password,

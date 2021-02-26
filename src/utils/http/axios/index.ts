@@ -11,7 +11,7 @@ import { checkStatus } from './checkStatus';
 import { useGlobSetting } from '/@/hooks/setting';
 import { useMessage } from '/@/hooks/web/useMessage';
 
-import { RequestEnum, ResultEnum, ContentTypeEnum } from '/@/enums/httpEnum';
+import { RequestEnum, ResultEnum } from '/@/enums/httpEnum';
 
 import { isString } from '/@/utils/is';
 import { setObjToUrlParams, deepMerge } from '/@/utils';
@@ -42,56 +42,33 @@ const transform: AxiosTransform = {
     }
     // 错误的时候返回
 
-    const { data } = res;
-    if (!data) {
+    if (!res.data) {
       // return '[HTTP] Request has no return value';
       return errorResult;
     }
     //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code, result, message } = data;
+    const { code, msg } = res.data;
 
     // 这里逻辑可以根据项目进行修改
-    const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
+    const hasSuccess = code === ResultEnum.SUCCESS;
     if (!hasSuccess) {
-      if (message) {
+      if (code.startsWith('80') || code.startsWith('90') || code === '-1') {
+        // 系统错误直接提示即可，业务无需处理
         // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
         if (options.errorMessageMode === 'modal') {
-          createErrorModal({ title: t('sys.api.errorTip'), content: message });
+          createErrorModal({ title: t('sys.api.errorTip'), content: msg });
         } else if (options.errorMessageMode === 'message') {
-          createMessage.error(message);
+          createMessage.error(msg);
         }
       }
-      Promise.reject(new Error(message));
+      Promise.reject(new Error(msg));
       return errorResult;
     }
 
     // 接口请求成功，直接返回结果
     if (code === ResultEnum.SUCCESS) {
-      return result;
+      return res.data.data;
     }
-    // 接口请求错误，统一提示错误信息
-    if (code === ResultEnum.ERROR) {
-      if (message) {
-        createMessage.error(data.message);
-        Promise.reject(new Error(message));
-      } else {
-        const msg = t('sys.api.errorMessage');
-        createMessage.error(msg);
-        Promise.reject(new Error(msg));
-      }
-      return errorResult;
-    }
-    // 登录超时
-    if (code === ResultEnum.TIMEOUT) {
-      const timeoutMsg = t('sys.api.timeoutMessage');
-      createErrorModal({
-        title: t('sys.api.operationFailed'),
-        content: timeoutMsg,
-      });
-      Promise.reject(new Error(timeoutMsg));
-      return errorResult;
-    }
-    return errorResult;
   },
 
   // 请求之前处理config
@@ -116,6 +93,10 @@ const transform: AxiosTransform = {
         config.params = undefined;
       }
     } else {
+      // 如果自定义data 则保持，兼容post form
+      if (config.data) {
+        return config;
+      }
       if (!isString(params)) {
         formatDate && formatRequestDate(params);
         config.data = params;
@@ -181,8 +162,11 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // baseURL: globSetting.apiUrl,
         // 接口可能会有通用的地址部分，可以统一抽取出来
         prefixUrl: prefix,
-        headers: { 'Content-Type': ContentTypeEnum.JSON },
-        // 如果是form-data格式
+        withCredentials: true,
+        xsrfCookieName: 'XSRF-TOKEN',
+        xsrfHeaderName: 'X-XSRF-TOKEN',
+        //headers: { 'Content-Type': ContentTypeEnum.JSON },
+        // 如果是form-data格式 利用axios 自动判断比较不好，不要指明如果data是键值或params对则为form
         // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
         // 数据处理方式
         transform,
