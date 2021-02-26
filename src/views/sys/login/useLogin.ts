@@ -98,7 +98,7 @@ export function useFormRules(formData?: Recordable) {
       // login form rules
       default:
         return {
-          account: accountFormRule,
+          username: accountFormRule,
           password: passwordFormRule,
         };
     }
@@ -112,6 +112,7 @@ function createRule(message: string) {
       required: true,
       message,
       trigger: 'change',
+      whitespace: true,
     },
   ];
 }

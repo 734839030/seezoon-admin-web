@@ -1,11 +1,10 @@
 <template>
   <div :class="prefixCls" class="relative w-full h-full px-4">
-    <!--
+    <!--   暂时不需要-->
     <AppLocalePicker
-      class="absolute top-4 right-4 enter-x text-white xl:text-gray-600"
+      class="absolute top-4 right-4 enter-x text-white xl:text-gray-600 hidden"
       :showText="false"
     />
-    -->
 
     <span class="-enter-x xl:hidden">
       <AppLogo :alwaysShowTitle="true" />

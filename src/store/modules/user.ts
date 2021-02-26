@@ -104,9 +104,7 @@ class User extends VuexModule {
     try {
       const { goHome = true, mode, ...loginParams } = params;
       const data = await loginApi(loginParams, mode);
-
       const { token, userId } = data;
-
       // save token
       this.commitTokenState(token);
 

@@ -150,7 +150,6 @@ export class VAxios {
   supportFormData(config: AxiosRequestConfig) {
     const headers = this.options?.headers;
     const contentType = headers?.['Content-Type'] || headers?.['content-type'];
-
     if (
       contentType !== ContentTypeEnum.FORM_URLENCODED ||
       !Reflect.has(config, 'data') ||
@@ -168,7 +167,6 @@ export class VAxios {
   request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     let conf: AxiosRequestConfig = cloneDeep(config);
     const transform = this.getTransform();
-
     const { requestOptions } = this.options;
 
     const opt: RequestOptions = Object.assign({}, requestOptions, options);
