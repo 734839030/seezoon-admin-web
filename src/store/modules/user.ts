@@ -1,8 +1,4 @@
-import type {
-  LoginParams,
-  GetUserInfoByUserIdModel,
-  //GetUserInfoByUserIdParams,
-} from '/@/api/sys/model/userModel';
+import type { LoginParams, GetUserInfoModel } from '/@/api/sys/model/userModel';
 
 import store from '/@/store/index';
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators';
@@ -16,16 +12,15 @@ import { useMessage } from '/@/hooks/web/useMessage';
 
 import router from '/@/router';
 
-import { getUserInfoById } from '/@/api/sys/user';
+import { getUserInfo, loginApi } from '/@/api/sys/user';
 
 import { setLocal, getLocal, getSession, setSession } from '/@/utils/cache/persistent';
 import { useProjectSetting } from '/@/hooks/setting';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
-import { defHttp } from '/@/utils/http/axios';
 //import { LoginResultModel } from '/@/api/sys/model/userModel';
 
-export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
+export type UserInfo = Omit<GetUserInfoModel, 'roles'>;
 
 const NAME = 'user';
 hotModuleUnregisterModule(NAME);
@@ -101,20 +96,20 @@ class User extends VuexModule {
       goHome?: boolean;
       mode?: ErrorMessageMode;
     }
-  ): Promise<GetUserInfoByUserIdModel | null> {
+  ): Promise<GetUserInfoModel | null> {
     try {
       const { goHome = true, ...loginParams } = params;
       // 同步登陆
-      await defHttp.postForm('/login', loginParams);
+      await loginApi(loginParams);
       //const data = await loginApi(loginParams);
+      await loginApi(loginParams);
       //const { token, userId } = data;
       // save token
-      //this.commitTokenState(token);
+      this.commitTokenState(new Date().getTime() + '');
 
       // get user info
       // const userInfo = await this.getUserInfoAction({ userId });
       await this.getUserInfoAction();
-
       goHome && (await router.replace(PageEnum.BASE_HOME));
       return null;
     } catch (error) {
@@ -124,13 +119,12 @@ class User extends VuexModule {
 
   @Action
   async getUserInfoAction() {
-    const userId = 1;
     // 获取菜单
-    const userInfo = await getUserInfoById({ userId });
-    //const { roles } = userInfo;
-    //const roleList = roles.map((item) => item.value) as RoleEnum[];
+    const userInfo = await getUserInfo();
+    const { roles } = userInfo;
+    const roleList = roles as RoleEnum[];
     this.commitUserInfoState(userInfo);
-    // this.commitRoleListState(roleList);
+    this.commitRoleListState(roleList);
     return userInfo;
   }
 

@@ -3,12 +3,12 @@ import {
   LoginParams,
   LoginResultModel,
   GetUserInfoByUserIdParams,
-  GetUserInfoByUserIdModel,
+  GetUserInfoModel,
 } from './model/userModel';
 
 enum Api {
   Login = '/login',
-  GetUserInfoById = '/getUserInfoById',
+  GetUserInfo = '/sys/user/getInfo',
   GetPermCodeByUserId = '/getPermCodeByUserId',
 }
 
@@ -16,18 +16,14 @@ enum Api {
  * @description: user login api
  */
 export function loginApi(params: LoginParams) {
-  return defHttp.postForm<LoginResultModel>(Api.Login, params);
+  return defHttp.postForm < LoginResultModel || null > (Api.Login, params);
 }
 
 /**
- * @description: getUserInfoById
+ * @description: getUserInfo
  */
-export function getUserInfoById(params: GetUserInfoByUserIdParams) {
-  return defHttp.request<GetUserInfoByUserIdModel>({
-    url: Api.GetUserInfoById,
-    method: 'GET',
-    params,
-  });
+export function getUserInfo() {
+  return defHttp.get<GetUserInfoModel>(Api.GetUserInfo);
 }
 
 export function getPermCodeByUserId(params: GetUserInfoByUserIdParams) {
