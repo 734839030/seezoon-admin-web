@@ -16,14 +16,14 @@ enum Api {
  * @description: user login api
  */
 export function loginApi(params: LoginParams) {
-  return defHttp.postForm < LoginResultModel || null > (Api.Login, params);
+  return defHttp.postForm<LoginResultModel>(Api.Login, params);
 }
 
 /**
  * @description: getUserInfo
  */
 export function getUserInfo() {
-  return defHttp.get<GetUserInfoModel>(Api.GetUserInfo);
+  return defHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo });
 }
 
 export function getPermCodeByUserId(params: GetUserInfoByUserIdParams) {
