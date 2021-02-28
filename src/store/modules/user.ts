@@ -12,7 +12,7 @@ import { useMessage } from '/@/hooks/web/useMessage';
 
 import router from '/@/router';
 
-import { getUserInfo, loginApi } from '/@/api/sys/user';
+import { getUserInfo, loginApi, logout } from '/@/api/sys/user';
 
 import { setLocal, getLocal, getSession, setSession } from '/@/utils/cache/persistent';
 import { useProjectSetting } from '/@/hooks/setting';
@@ -102,7 +102,6 @@ class User extends VuexModule {
       // 同步登陆
       await loginApi(loginParams);
       //const data = await loginApi(loginParams);
-      await loginApi(loginParams);
       //const { token, userId } = data;
       // save token
       this.commitTokenState(new Date().getTime() + '');
@@ -133,6 +132,7 @@ class User extends VuexModule {
    */
   @Action
   async logout(goLogin = false) {
+    await logout();
     goLogin && router.push(PageEnum.BASE_LOGIN);
   }
 

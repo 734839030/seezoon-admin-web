@@ -2,7 +2,7 @@
   <div :class="prefixCls" class="relative w-full h-full px-4">
     <!--   暂时不需要-->
     <AppLocalePicker
-      v-if="false"
+      v-if="showLocale"
       class="absolute top-4 right-4 enter-x text-white xl:text-gray-600"
       :showText="false"
     />
@@ -58,6 +58,7 @@
   import { useGlobSetting, useProjectSetting } from '/@/hooks/setting';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import { useLocaleSetting } from '/@/hooks/setting/useLocaleSetting';
 
   export default defineComponent({
     name: 'Login',

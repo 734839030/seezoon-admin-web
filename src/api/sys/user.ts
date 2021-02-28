@@ -8,6 +8,7 @@ import {
 
 enum Api {
   Login = '/login',
+  Logout = '/logout',
   GetUserInfo = '/sys/user/getInfo',
   GetPermCodeByUserId = '/getPermCodeByUserId',
 }
@@ -18,7 +19,12 @@ enum Api {
 export function loginApi(params: LoginParams) {
   return defHttp.postForm<LoginResultModel>(Api.Login, params);
 }
-
+/**
+ * @description: user logout
+ */
+export function logout() {
+  return defHttp.post<any>({ url: Api.Logout });
+}
 /**
  * @description: getUserInfo
  */

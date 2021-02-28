@@ -6,8 +6,8 @@ export default {
   signUpFormTitle: '注册',
   forgetFormTitle: '重置密码',
 
-  signInTitle: '快速开发平台',
-  signInDesc: '上征科技提供技术支持',
+  signInTitle: 'Seeoon Stack快速开发平台',
+  signInDesc: '装了斯文，露了痞性，满纸一个嗔字。',
   policy: '我同意xxx隐私政策',
   scanSign: `扫码后点击"确认"，即可完成登录`,
 

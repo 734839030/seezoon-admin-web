@@ -2,6 +2,7 @@ import '/@/design/index.less';
 import 'windi.css';
 
 import { createApp } from 'vue';
+import Antd from 'ant-design-vue';
 import App from './App.vue';
 
 import router, { setupRouter } from '/@/router';
@@ -14,8 +15,9 @@ import { registerGlobComp } from '/@/components/registerGlobComp';
 
 import { isDevMode } from '/@/utils/env';
 
+// @ts-ignore
 const app = createApp(App);
-
+app.use(Antd);
 // Register global components
 registerGlobComp(app);
 

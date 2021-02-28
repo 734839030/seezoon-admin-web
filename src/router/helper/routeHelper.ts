@@ -54,6 +54,7 @@ function dynamicImport(
 
 // Turn background objects into routing objects
 export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModule[]): T[] {
+  // @ts-ignore
   LayoutMap.set('LAYOUT', LAYOUT);
 
   routeList.forEach((route) => {
