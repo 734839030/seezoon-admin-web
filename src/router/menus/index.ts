@@ -99,8 +99,7 @@ function basicFilter(routes: RouteRecordNormalized[]) {
     });
 
     if (!matchRoute) return false;
-    // @ts-ignore
-    menu.icon = menu.icon || matchRoute.meta.icon;
+    menu.icon = (menu.icon || matchRoute.meta.icon) as string;
     menu.meta = matchRoute.meta;
     return true;
   };
