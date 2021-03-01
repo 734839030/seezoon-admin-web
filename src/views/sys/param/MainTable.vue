@@ -1,27 +1,25 @@
 <template>
   <!-- 查询表单 -->
-  <a-form ref="searchForm" :model="searchForm">
-    <a-row :gutter="10">
-      <a-col :md="4" :xs="24">
-        <a-form-item label="参数名" name="name">
-          <a-input v-model:value="searchForm.name" :maxlength="50" placeholder="请输入参数名" />
-        </a-form-item>
-      </a-col>
-      <a-col :md="4" :xs="24">
-        <a-form-item label="键" name="paramKey">
-          <a-input v-model:value="searchForm.paramKey" :maxlength="50" placeholder="请输入唯一键" />
-        </a-form-item>
-      </a-col>
-      <a-col :span="3">
-        <a-form-item>
-          <a-space>
-            <a-button type="primary" @click="handleQuery()">查询</a-button>
-            <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
-            <a-button type="default" @click="handleDataForm('添加')">添加</a-button>
-          </a-space>
-        </a-form-item>
-      </a-col>
-    </a-row>
+  <a-form
+    ref="searchForm"
+    :model="searchForm"
+    layout="inline"
+    :labelCol="this.searchFormLabelCol"
+    :wrapperCol="this.searchFormWrapperCol"
+  >
+    <a-form-item label="参数名" name="name">
+      <a-input v-model:value="searchForm.name" :maxlength="50" placeholder="请输入参数名" />
+    </a-form-item>
+    <a-form-item label="键" name="paramKey">
+      <a-input v-model:value="searchForm.paramKey" :maxlength="50" placeholder="请输入唯一键" />
+    </a-form-item>
+    <a-form-item>
+      <a-space>
+        <a-button type="primary" @click="handleQuery()">查询</a-button>
+        <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
+        <a-button type="default" @click="handleDataForm('添加')">添加</a-button>
+      </a-space>
+    </a-form-item>
   </a-form>
   <a-table
     :columns="columns"
@@ -32,6 +30,7 @@
     :scroll="{ y: 600 }"
     bordered
     size="small"
+    class="mt-4"
     @change="handleTableChange"
   >
     <template #status="{ text }">
@@ -59,9 +58,9 @@
   />
 </template>
 <script>
-  import { queryTableMixin } from '/@/mixins/common/query-table-mixin.js';
   import DataFormModal from './DataFormModal.vue';
   import { defHttp } from '../../../utils/http/axios';
+  import { queryTableMixin } from '../../../mixins/common/query-table-mixin.js';
 
   export default {
     name: 'MainTable',

@@ -98,7 +98,7 @@
 </template>
 
 <script>
-  import { dataFormModalMixin } from '/@/mixins/common/data-form-mixin-modal.js';
+  import { dataFormModalMixin } from '../../../mixins/common/data-form-mixin-modal.js';
 
   export default {
     name: 'DataFormModal',

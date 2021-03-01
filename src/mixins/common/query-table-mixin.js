@@ -8,6 +8,8 @@ export const queryTableMixin = {
       url: '', // 请求地址
       columns: [], // 表格头部
       searchForm: {}, // 搜索条件
+      searchFormLabelCol: { span: 6 },
+      searchFormWrapperCol: { span: 18 },
       data: [], // 表格数据
       pagination: {
         showSizeChanger: true,

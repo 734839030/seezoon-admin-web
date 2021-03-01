@@ -23,7 +23,7 @@ export const dataFormModalMixin = {
         .validate()
         .then(() => {
           this.confirmLoading = true;
-          request
+          defHttp
             .post(url, this.dataForm)
             .then(() => {
               this.handleOkCb();
