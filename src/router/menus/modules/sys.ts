@@ -11,6 +11,10 @@ const menu: MenuModule = {
         path: 'param',
         name: '系统参数',
       },
+      {
+        path: 'dict',
+        name: '系统字典',
+      },
     ],
   },
 };

@@ -7,6 +7,10 @@ export const dataFormModalMixin = {
   },
   data() {
     return {
+      width: 750,
+      height: 600,
+      labelCol: { span: 6 },
+      wrapperCol: { span: 18 },
       visible: false,
       confirmLoading: false,
     };

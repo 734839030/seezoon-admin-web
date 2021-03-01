@@ -16,8 +16,17 @@ const sys: AppRouteModule = {
       name: 'param',
       component: () => import('/@/views/sys/param/index.vue'),
       meta: {
-        icon: 'ls:paramater',
+        icon: 'zmdi:code-setting',
         title: '系统参数',
+      },
+    },
+    {
+      path: 'dict',
+      name: 'dict',
+      component: () => import('/@/views/sys/dict/index.vue'),
+      meta: {
+        icon: 'raphael:books',
+        title: '系统字典',
       },
     },
   ],

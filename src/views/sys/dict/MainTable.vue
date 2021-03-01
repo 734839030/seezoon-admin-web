@@ -7,11 +7,21 @@
     :labelCol="this.labelCol"
     :wrapperCol="this.wrapperCol"
   >
-    <a-form-item label="参数名" name="name">
-      <a-input v-model:value="searchForm.name" :maxlength="50" placeholder="请输入参数名" />
+    <a-form-item name="type" label="类型">
+      <a-select
+        v-model:value="searchForm.type"
+        :allowClear="true"
+        :options="dictTypes"
+        placeholder="请选择类型"
+        show-search
+        style="width: 160px"
+    /></a-form-item>
+
+    <a-form-item label="编码" name="code">
+      <a-input v-model:value="searchForm.code" :maxlength="50" placeholder="请输入编码" />
     </a-form-item>
-    <a-form-item label="键" name="paramKey">
-      <a-input v-model:value="searchForm.paramKey" :maxlength="50" placeholder="请输入唯一键" />
+    <a-form-item label="名称" name="name">
+      <a-input v-model:value="searchForm.name" :maxlength="50" placeholder="请输入名称" />
     </a-form-item>
     <a-form-item>
       <a-space>
@@ -44,7 +54,7 @@
       <a-popconfirm
         placement="left"
         title="确定删除？"
-        @confirm="handleDelete('/sys/param/delete', record.id)"
+        @confirm="handleDelete('/sys/dict/delete', record.id)"
       >
         <a>删除</a>
       </a-popconfirm>
@@ -59,32 +69,52 @@
 </template>
 <script>
   import DataFormModal from './DataFormModal.vue';
+  import { onMounted, ref } from 'vue';
   import { defHttp } from '../../../utils/http/axios';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin.js';
+  import { getTypes } from '../../../api/sys/sys';
 
   export default {
     name: 'MainTable',
     components: { DataFormModal },
     mixins: [queryTableMixin],
+    setup() {
+      let dictTypes = ref([]);
+      onMounted(async () => {
+        dictTypes.value = await getTypes();
+      });
+      return {
+        dictTypes,
+      };
+    },
     data() {
       return {
-        url: '/sys/param/query',
+        url: '/sys/dict/query',
         columns: [
           {
-            title: '参数名',
+            title: '类型',
+            dataIndex: 'type',
+            width: 120,
+          },
+          {
+            title: '编码',
+            dataIndex: 'code',
+            width: 120,
+          },
+          {
+            title: '名称',
             dataIndex: 'name',
+            width: 100,
           },
           {
-            title: '键',
-            dataIndex: 'paramKey',
-          },
-          {
-            title: '值',
-            dataIndex: 'paramValue',
+            title: '排序',
+            dataIndex: 'sort',
+            width: 100,
           },
           {
             title: '状态',
             dataIndex: 'status',
+            width: 100,
             slots: { customRender: 'status' },
           },
           {
@@ -112,13 +142,16 @@
     methods: {
       handleDataForm(title, id) {
         if (id) {
-          defHttp.get({ url: '/sys/param/query/' + id }).then((data) => {
+          defHttp.get({ url: '/sys/dict/query/' + id }).then((data) => {
             this.$refs.dataFormModal.show();
             this.dataFormModal = { title: title, dataForm: data };
           });
         } else {
           this.$refs.dataFormModal.show();
-          this.dataFormModal = { title: title, dataForm: { status: 1 } };
+          this.dataFormModal = {
+            title: title,
+            dataForm: { status: 1, sort: 10, type: this.searchForm.type },
+          };
         }
       },
     },

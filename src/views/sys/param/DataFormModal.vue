@@ -3,14 +3,19 @@
     v-model:visible="visible"
     :confirm-loading="confirmLoading"
     :destroyOnClose="true"
-    :height="600"
+    :height="this.height"
     :maskClosable="false"
     :title="title"
-    :width="750"
+    :width="this.width"
     okText="保存"
     @ok="handleOk(this.dataForm.id === undefined ? '/sys/param/save' : '/sys/param/update')"
   >
-    <a-form ref="dataForm" :label-col="{ span: 6 }" :model="dataForm" :wrapper-col="{ span: 18 }">
+    <a-form
+      ref="dataForm"
+      :label-col="this.labelCol"
+      :model="dataForm"
+      :wrapper-col="this.wrapperCol"
+    >
       <a-input v-model:value="dataForm.id" type="hidden" />
       <a-row>
         <a-col :md="12" :xs="24">
