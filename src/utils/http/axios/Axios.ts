@@ -164,14 +164,20 @@ export class VAxios {
       data: qs.stringify(config.data),
     };
   }
-
-  postForm<T = any>(url: string, params: any): Promise<T> {
+  postFile<T = any>(url: string, params: FormData, options?: RequestOptions): Promise<T> {
+    const config: AxiosRequestConfig = {
+      url: url,
+      data: params,
+      method: RequestEnum.POST,
+    };
+    return this.request(config, options);
+  }
+  postForm<T = any>(url: string, params: any, options?: RequestOptions): Promise<T> {
     const config: AxiosRequestConfig = {
       url: url,
       data: qs.stringify(params),
       method: RequestEnum.POST,
     };
-    const options: RequestOptions = { errorMessageMode: 'message' };
     return this.request(config, options);
   }
 

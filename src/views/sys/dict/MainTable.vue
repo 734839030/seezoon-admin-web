@@ -72,7 +72,7 @@
   import { onMounted, ref } from 'vue';
   import { defHttp } from '../../../utils/http/axios';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin.js';
-  import { getTypes } from '../../../api/sys/sys';
+  import { getTypes } from '../../../api/sys';
 
   export default {
     name: 'MainTable',

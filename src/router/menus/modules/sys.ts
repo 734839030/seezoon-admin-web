@@ -15,6 +15,22 @@ const menu: MenuModule = {
         path: 'dict',
         name: '系统字典',
       },
+      {
+        path: 'dept',
+        name: '部门管理',
+      },
+      {
+        path: 'user',
+        name: '用户管理',
+      },
+      {
+        path: 'role',
+        name: '角色管理',
+      },
+      {
+        path: 'menu',
+        name: '菜单管理',
+      },
     ],
   },
 };

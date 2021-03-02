@@ -28,7 +28,7 @@ export const dataFormModalMixin = {
         .then(() => {
           this.confirmLoading = true;
           defHttp
-            .post(url, this.dataForm)
+            .post({ url: url, params: this.dataForm })
             .then(() => {
               this.handleOkCb();
               this.visible = false;

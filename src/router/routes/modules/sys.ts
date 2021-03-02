@@ -29,6 +29,42 @@ const sys: AppRouteModule = {
         title: '系统字典',
       },
     },
+    {
+      path: 'dept',
+      name: 'dept',
+      component: () => import('/@/views/sys/dept/index.vue'),
+      meta: {
+        icon: 'clarity:organization-line',
+        title: '部门管理',
+      },
+    },
+    {
+      path: 'user',
+      name: 'user',
+      component: () => import('/@/views/sys/user/index.vue'),
+      meta: {
+        icon: 'ant-design:user-switch-outlined',
+        title: '用户管理',
+      },
+    },
+    {
+      path: 'role',
+      name: 'role',
+      component: () => import('/@/views/sys/role/index.vue'),
+      meta: {
+        icon: 'carbon:user-role',
+        title: '角色管理',
+      },
+    },
+    {
+      path: 'menu',
+      name: 'menu',
+      component: () => import('/@/views/sys/menu/index.vue'),
+      meta: {
+        icon: 'ic:sharp-menu-book',
+        title: '菜单管理',
+      },
+    },
   ],
 };
 
