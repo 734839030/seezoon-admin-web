@@ -3,15 +3,20 @@
     v-model:visible="visible"
     :confirm-loading="confirmLoading"
     :destroyOnClose="true"
-    :height="600"
+    :height="this.height"
     :maskClosable="false"
     :title="title"
-    :width="750"
+    :width="this.width"
     okText="保存"
     @ok="handleOk(this.dataForm.id === undefined ? '/sys/role/save' : '/sys/role/update')"
   >
-    <a-form ref="dataForm" :label-col="{ span: 6 }" :model="dataForm" :wrapper-col="{ span: 18 }">
-      <a-input v-model:value="dataForm.id" type="hidden"></a-input>
+    <a-form
+      ref="dataForm"
+      :label-col="this.labelCol"
+      :model="dataForm"
+      :wrapper-col="this.wrapperCol"
+    >
+      <a-input v-model:value="dataForm.id" type="hidden" />
       <a-row>
         <a-col :md="12" :xs="24">
           <a-form-item
@@ -23,8 +28,7 @@
             label="编码"
             name="code"
           >
-            <a-input v-model:value="dataForm.code" :maxlength="50" placeholder="请输入编码">
-            </a-input>
+            <a-input v-model:value="dataForm.code" :maxlength="50" placeholder="请输入编码" />
           </a-form-item>
         </a-col>
         <a-col :md="12" :xs="24">
@@ -37,7 +41,7 @@
             label="名称"
             name="name"
           >
-            <a-input v-model:value="dataForm.name" :maxlength="50" placeholder="名称"> </a-input>
+            <a-input v-model:value="dataForm.name" :maxlength="50" placeholder="名称" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -55,8 +59,7 @@
               :allowClear="true"
               :options="dataScopeArray"
               placeholder="请选择数据范围"
-            >
-            </a-select>
+            />
           </a-form-item>
         </a-col>
         <a-col :md="12" :xs="24">
@@ -116,9 +119,9 @@
 </template>
 
 <script>
-  import { dataFormModalMixin } from '@/mixins/common/data-form-mixin-modal';
-  import { dataScopeArray } from '@/views/sys/role/data';
-  import { menuTreeMixin } from '@/mixins/sys/menu-tree-mixin';
+  import { dataFormModalMixin } from '../../../mixins/common/data-form-mixin-modal';
+  import { menuTreeMixin } from '../../../mixins/sys/menu-tree-mixin';
+  import { dataScopeArray } from './data';
 
   export default {
     name: 'DataFormModal',

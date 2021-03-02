@@ -1,3 +1,5 @@
+import { menuTree } from '../../api/sys';
+
 export const menuTreeMixin = {
   mounted() {
     this.loadMenuData();

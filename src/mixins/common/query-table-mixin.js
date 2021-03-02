@@ -8,9 +8,9 @@ export const queryTableMixin = {
       url: '', // 请求地址
       columns: [], // 表格头部
       searchForm: {}, // 搜索条件
-      labelCol: { span: 6 },
-      wrapperCol: { span: 18 },
-      scroll: { y: 600 },
+      labelCol: { span: 8 },
+      wrapperCol: { span: 16 },
+      scroll: { x: 1000, y: 600 },
       data: [], // 表格数据
       pagination: {
         showSizeChanger: true,

@@ -13,7 +13,7 @@ export const deptTreeSelectMixin = {
     loadDeptData(treeNode) {
       return new Promise((resolve) => {
         if (treeNode && treeNode.dataRef.children) {
-          resolve([]);
+          resolve();
           return;
         }
         deptTree(treeNode ? treeNode.dataRef.value : 0, true).then((data) => {
@@ -22,7 +22,7 @@ export const deptTreeSelectMixin = {
           } else {
             treeNode.dataRef.children = data;
           }
-          resolve(data);
+          resolve();
         });
       });
     },

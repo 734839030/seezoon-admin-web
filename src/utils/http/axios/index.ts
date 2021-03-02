@@ -165,6 +165,9 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         withCredentials: true,
         xsrfCookieName: 'XSRF-TOKEN',
         xsrfHeaderName: 'X-XSRF-TOKEN',
+        headers: {
+          ignoreCancelToken: true,
+        },
         //headers: { 'Content-Type': ContentTypeEnum.JSON },
         // 如果是form-data格式 利用axios 自动判断比较不好，不要指明如果data是键值或params对则为form
         // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },

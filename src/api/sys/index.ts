@@ -42,3 +42,10 @@ export async function getRoles() {
   }
   return roles;
 }
+
+/**
+ * 字段数组转map
+ */
+export function dictArray2Map(dictArray: Dict[]) {
+  return new Map(dictArray.map((dict) => [dict.value, dict.label]));
+}

@@ -18,7 +18,12 @@
         <a-input v-model:value="searchForm.mobile" :maxlength="20" placeholder="请输入手机号" />
       </a-form-item>
       <a-form-item label="状态" name="status">
-        <a-select v-model:value="searchForm.status" :allowClear="true" placeholder="请选择状态">
+        <a-select
+          v-model:value="searchForm.status"
+          :allowClear="true"
+          placeholder="请选择状态"
+          style="width: 120px"
+        >
           <a-select-option :value="1">正常</a-select-option>
           <a-select-option :value="0">禁用</a-select-option>
         </a-select>
@@ -110,6 +115,7 @@
           {
             title: '部门',
             dataIndex: 'deptName',
+            width: '18%',
           },
           {
             title: '手机号',
@@ -127,7 +133,6 @@
           {
             title: '创建时间',
             dataIndex: 'createTime',
-            ellipsis: true,
           },
           {
             title: '修改时间',
@@ -137,7 +142,7 @@
           {
             title: '操作',
             fixed: 'right',
-            width: 120,
+            width: 100,
             slots: { customRender: 'action' },
           },
         ],

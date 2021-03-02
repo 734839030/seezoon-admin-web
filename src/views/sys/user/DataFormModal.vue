@@ -137,6 +137,8 @@
             <a-input-password
               v-model:value="dataForm.confirmPassword"
               :maxlength="50"
+              allow-clear
+              autocomplete="new-password"
               placeholder="请确认密码"
             />
           </a-form-item>

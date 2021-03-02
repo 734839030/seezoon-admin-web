@@ -3,14 +3,19 @@
     v-model:visible="visible"
     :confirm-loading="confirmLoading"
     :destroyOnClose="true"
-    :height="600"
+    :height="this.height"
     :maskClosable="false"
-    :width="750"
+    :width="this.width"
     okText="保存"
     @ok="handleOk(this.dataForm.id === undefined ? '/sys/menu/save' : '/sys/menu/update')"
   >
-    <a-form ref="dataForm" :label-col="{ span: 6 }" :model="dataForm" :wrapper-col="{ span: 18 }">
-      <a-input v-model:value="dataForm.id" type="hidden"></a-input>
+    <a-form
+      ref="dataForm"
+      :label-col="this.labelCol"
+      :model="dataForm"
+      :wrapper-col="this.wrapperCol"
+    >
+      <a-input v-model:value="dataForm.id" type="hidden" />
       <a-tabs v-model:activeKey="dataForm.type" :animated="false" @change="handleTabChange">
         <a-tab-pane v-for="pane in tabsPanes" :key="pane.key" :tab="pane.title">
           <div v-if="pane.key === dataForm.type">
@@ -23,8 +28,7 @@
                     :load-data="loadMenuData"
                     :tree-data="menuTreeData"
                     placeholder="请选择上级菜单"
-                  >
-                  </a-tree-select>
+                  />
                 </a-form-item>
               </a-col>
               <a-col :md="12" :xs="24">
@@ -91,15 +95,14 @@
                     :precision="0"
                     :step="10"
                     placeholder="请输入顺序"
-                  ></a-input-number>
+                  />
                 </a-form-item>
               </a-col>
             </a-row>
             <a-row>
               <a-col :md="12" :xs="24">
                 <a-form-item :rules="[]" label="图标" name="icon">
-                  <a-input v-model:value="dataForm.icon" :maxlength="50" placeholder="选择图标">
-                  </a-input>
+                  <a-input v-model:value="dataForm.icon" :maxlength="50" placeholder="选择图标" />
                 </a-form-item>
               </a-col>
               <a-col :md="12" :xs="24">
@@ -151,8 +154,8 @@
 </template>
 
 <script>
-  import { dataFormModalMixin } from '@/mixins/common/data-form-mixin-modal';
-  import { menuTreeMixin } from '@/mixins/sys/menu-tree-mixin';
+  import { dataFormModalMixin } from '../../../mixins/common/data-form-mixin-modal';
+  import { menuTreeMixin } from '../../../mixins/sys/menu-tree-mixin';
 
   export default {
     name: 'DataFormModal',
