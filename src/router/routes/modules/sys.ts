@@ -3,7 +3,7 @@ import type { AppRouteModule } from '/@/router/types';
 import { LAYOUT } from '/@/router/constant';
 
 const sys: AppRouteModule = {
-  path: '/sys',
+  path: '/',
   name: 'sys',
   component: LAYOUT,
   meta: {
@@ -12,26 +12,8 @@ const sys: AppRouteModule = {
   },
   children: [
     {
-      path: 'param',
-      name: 'param',
-      component: () => import('/@/views/sys/param/index.vue'),
-      meta: {
-        icon: 'zmdi:code-setting',
-        title: '系统参数',
-      },
-    },
-    {
-      path: 'dict',
-      name: 'dict',
-      component: () => import('/@/views/sys/dict/index.vue'),
-      meta: {
-        icon: 'raphael:books',
-        title: '系统字典',
-      },
-    },
-    {
-      path: 'dept',
-      name: 'dept',
+      path: '/sys/dept',
+      name: '/sys/dept',
       component: () => import('/@/views/sys/dept/index.vue'),
       meta: {
         icon: 'clarity:organization-line',
@@ -39,8 +21,8 @@ const sys: AppRouteModule = {
       },
     },
     {
-      path: 'user',
-      name: 'user',
+      path: '/sys/user',
+      name: '/sys/user',
       component: () => import('/@/views/sys/user/index.vue'),
       meta: {
         icon: 'ant-design:user-switch-outlined',
@@ -48,8 +30,8 @@ const sys: AppRouteModule = {
       },
     },
     {
-      path: 'role',
-      name: 'role',
+      path: '/sys/role',
+      name: '/sys/role',
       component: () => import('/@/views/sys/role/index.vue'),
       meta: {
         icon: 'carbon:user-role',
@@ -57,8 +39,8 @@ const sys: AppRouteModule = {
       },
     },
     {
-      path: 'menu',
-      name: 'menu',
+      path: '/sys/menu',
+      name: '/sys/menu',
       component: () => import('/@/views/sys/menu/index.vue'),
       meta: {
         icon: 'ic:sharp-menu-book',
@@ -66,8 +48,26 @@ const sys: AppRouteModule = {
       },
     },
     {
-      path: 'file',
-      name: 'file',
+      path: '/sys/param',
+      name: '/sys/param',
+      component: () => import('/@/views/sys/param/index.vue'),
+      meta: {
+        icon: 'zmdi:code-setting',
+        title: '系统参数',
+      },
+    },
+    {
+      path: '/sys/dict',
+      name: '/sys/dict',
+      component: () => import('/@/views/sys/dict/index.vue'),
+      meta: {
+        icon: 'raphael:books',
+        title: '系统字典',
+      },
+    },
+    {
+      path: '/sys/file',
+      name: '/sys/file',
       component: () => import('/@/views/sys/file/index.vue'),
       meta: {
         icon: 'akar-icons:file',

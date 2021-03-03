@@ -1,13 +1,13 @@
 import type { ProjectConfig } from '/#/config';
 
-import { MenuTypeEnum, MenuModeEnum, TriggerEnum, MixSidebarTriggerEnum } from '/@/enums/menuEnum';
+import { MenuModeEnum, MenuTypeEnum, MixSidebarTriggerEnum, TriggerEnum } from '/@/enums/menuEnum';
 import { CacheTypeEnum } from '/@/enums/cacheEnum';
 import {
   ContentEnum,
   PermissionModeEnum,
-  ThemeEnum,
   RouterTransitionEnum,
   SettingButtonPositionEnum,
+  ThemeEnum,
 } from '/@/enums/appEnum';
 import { primaryColor, themeMode } from '../../build/config/themeConfig';
 
@@ -67,7 +67,7 @@ const setting: ProjectConfig = {
     // Whether to show the document button
     showDoc: true,
     // Whether to show the notification button
-    showNotice: true,
+    showNotice: false,
     // Whether to display the menu search
     showSearch: true,
   },

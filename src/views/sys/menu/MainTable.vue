@@ -2,7 +2,7 @@
   <a-form layout="inline">
     <a-form-item>
       <a-space>
-        <a-button type="primary" @click="handleQuery()">查询</a-button>
+        <a-button type="primary" @click="handleQuery()"> 查询 </a-button>
         <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
         <a-button type="default" @click="handleDataForm('添加')">添加</a-button>
       </a-space>
@@ -14,15 +14,18 @@
     :loading="loading"
     :row-key="(record) => record.id"
     :scroll="{ x: 1200 }"
-    class="mt-4 pr-4"
     bordered
+    class="mt-4 pr-4"
     size="small"
   >
+    <template #icon="{ text }">
+      <g-icon v-if="text" :icon="text" />
+    </template>
     <template #type="{ text }">
-      <a-tag v-if="text === 1" color="blue"> 目录 </a-tag>
-      <a-tag v-else-if="text === 2" color="cyan"> 菜单 </a-tag>
+      <a-tag v-if="text === 1" color="blue"> 目录</a-tag>
+      <a-tag v-else-if="text === 2" color="cyan"> 菜单</a-tag>
       <!-- type==3-->
-      <a-tag v-else color="green"> 按钮 </a-tag>
+      <a-tag v-else color="green"> 按钮</a-tag>
     </template>
     <template #status="{ text }">
       <a-tag :color="text == 1 ? 'blue' : 'red'">
@@ -52,10 +55,11 @@
   import DataFormModal from './DataFormModal.vue';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin';
   import { defHttp } from '../../../utils/http/axios';
+  import GIcon from '../../../components/Icon';
 
   export default {
     name: 'MainTable',
-    components: { DataFormModal },
+    components: { DataFormModal, GIcon },
     mixins: [queryTableMixin],
     data() {
       return {
@@ -77,6 +81,7 @@
             title: '图标',
             dataIndex: 'icon',
             width: 80,
+            slots: { customRender: 'icon' },
           },
           {
             title: '类型',
