@@ -2,10 +2,10 @@
   <!-- 查询表单 -->
   <a-form
     ref="searchForm"
-    :model="searchForm"
-    layout="inline"
     :labelCol="this.labelCol"
+    :model="searchForm"
     :wrapperCol="this.wrapperCol"
+    layout="inline"
   >
     <a-form-item label="文件名" name="name">
       <a-input v-model:value="searchForm.name" :maxlength="200" placeholder="模糊搜索" />
@@ -40,10 +40,9 @@
     :loading="loading"
     :pagination="pagination"
     :row-key="(record) => record.id"
-    :scroll="{ x: this.scrollX, y: this.scrollY }"
     bordered
-    size="small"
     class="mt-4"
+    size="small"
     @change="handleTableChange"
   >
     <template #action="{ record }">
@@ -67,7 +66,6 @@
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin';
   import { defHttp } from '../../../utils/http/axios';
   import { openWindow } from '../../../utils';
-  import { downloadByUrl } from '../../../utils/file/download';
   import { useGlobSetting } from '../../../hooks/setting';
 
   export default {
