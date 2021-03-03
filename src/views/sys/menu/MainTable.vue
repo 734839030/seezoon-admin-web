@@ -13,7 +13,7 @@
     :data-source="data"
     :loading="loading"
     :row-key="(record) => record.id"
-    :scroll="{ x: this.scrollX, y: this.scrollY }"
+    :scroll="{ x: 1200 }"
     class="mt-4 pr-4"
     bordered
     size="small"
@@ -64,40 +64,52 @@
           {
             title: '名称',
             dataIndex: 'name',
+            fixed: 'left',
+            width: 180,
           },
           {
             title: '地址',
             dataIndex: 'url',
+            ellipsis: true,
+            width: 120,
           },
           {
             title: '图标',
             dataIndex: 'icon',
+            width: 80,
           },
           {
             title: '类型',
             dataIndex: 'type',
+            width: 80,
             slots: { customRender: 'type' },
           },
           {
             title: '排序',
             dataIndex: 'sort',
+            width: 80,
           },
           {
             title: '授权标识',
             dataIndex: 'permission',
+            ellipsis: true,
+            width: 160,
           },
           {
             title: '状态',
             dataIndex: 'status',
+            width: 80,
             slots: { customRender: 'status' },
           },
           {
             title: '创建时间',
             dataIndex: 'createTime',
+            width: 180,
           },
           {
             title: '修改时间',
             dataIndex: 'updateTime',
+            width: 180,
           },
           {
             title: '操作',

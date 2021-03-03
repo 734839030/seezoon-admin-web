@@ -48,7 +48,7 @@
         :loading="loading"
         :pagination="pagination"
         :row-key="(record) => record.id"
-        :scroll="{ x: 1500, y: this.scrollY }"
+        :scroll="{ x: 1500 }"
         bordered
         size="small"
         @change="handleTableChange"
@@ -99,23 +99,29 @@
           {
             title: '登录名',
             dataIndex: 'username',
+            fixed: 'left',
+            width: 100,
           },
           {
             title: '头像',
             dataIndex: 'photoUrl',
             slots: { customRender: 'photoUrl' },
+            width: 100,
           },
           {
             title: '姓名',
             dataIndex: 'name',
+            width: 100,
           },
           {
             title: '部门',
             dataIndex: 'deptName',
+            width: 180,
           },
           {
             title: '手机号',
             dataIndex: 'mobile',
+            width: 180,
           },
           {
             title: '邮箱',
@@ -129,10 +135,12 @@
           {
             title: '创建时间',
             dataIndex: 'createTime',
+            width: 180,
           },
           {
             title: '修改时间',
             dataIndex: 'updateTime',
+            width: 180,
             sorter: true,
           },
           {

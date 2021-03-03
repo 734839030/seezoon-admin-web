@@ -47,7 +47,6 @@
     :loading="loading"
     :pagination="pagination"
     :row-key="(record) => record.id"
-    :scroll="{ x: this.scrollX, y: this.scrollY }"
     bordered
     class="mt-4"
     size="small"
@@ -127,7 +126,7 @@
           {
             title: '操作',
             fixed: 'right',
-            width: 135,
+            width: 140,
             slots: { customRender: 'action' },
           },
         ],

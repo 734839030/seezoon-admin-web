@@ -31,7 +31,7 @@
         :loading="loading"
         :pagination="pagination"
         :row-key="(record) => record.id"
-        :scroll="{ x: this.scrollX, y: this.scrollY }"
+        :scroll="{ x: 1200 }"
         bordered
         size="small"
         @change="handleTableChange"
@@ -75,30 +75,38 @@
           {
             title: '部门名称',
             dataIndex: 'name',
+            fixed: 'left',
+            width: 180,
           },
           {
             title: '父部门',
             dataIndex: 'parentName',
+            width: 180,
           },
           {
             title: '联系人',
             dataIndex: 'contactUser',
+            width: 120,
           },
           {
             title: '联系电话',
             dataIndex: 'telephone',
+            width: 180,
           },
           {
             title: '序号',
             dataIndex: 'sort',
+            width: 80,
           },
           {
             title: '创建时间',
             dataIndex: 'createTime',
+            width: 180,
           },
           {
             title: '修改时间',
             dataIndex: 'updateTime',
+            width: 180,
           },
           {
             title: '操作',

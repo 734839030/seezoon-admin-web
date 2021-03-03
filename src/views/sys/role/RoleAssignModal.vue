@@ -68,7 +68,6 @@
         selectedRowKeys: userTableSelectedRowKeys,
         onChange: userTableSelectedRowChange,
       }"
-      :scroll="{ x: this.scrollX, y: this.scrollY }"
       bordered
       class="mt-4"
       size="small"

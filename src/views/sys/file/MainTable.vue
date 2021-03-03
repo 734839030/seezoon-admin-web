@@ -1,6 +1,12 @@
 <template>
   <!-- 查询表单 -->
-  <a-form ref="searchForm" :model="searchForm" layout="inline">
+  <a-form
+    ref="searchForm"
+    :model="searchForm"
+    layout="inline"
+    :labelCol="this.labelCol"
+    :wrapperCol="this.wrapperCol"
+  >
     <a-form-item label="文件名" name="name">
       <a-input v-model:value="searchForm.name" :maxlength="200" placeholder="模糊搜索" />
     </a-form-item>
@@ -61,6 +67,8 @@
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin';
   import { defHttp } from '../../../utils/http/axios';
   import { openWindow } from '../../../utils';
+  import { downloadByUrl } from '../../../utils/file/download';
+  import { useGlobSetting } from '../../../hooks/setting';
 
   export default {
     name: 'MainTable',
@@ -108,10 +116,11 @@
     },
     methods: {
       preview(url) {
-        window.open(url, '_blank');
+        openWindow(url);
       },
       download(id) {
-        openWindow(defHttp.defaults.baseURL + '/sys/file/download?id=' + id);
+        const { apiUrl } = useGlobSetting();
+        openWindow(apiUrl + '/sys/file/download?id=' + id);
       },
       customRequest(formData) {
         const form = new FormData();
