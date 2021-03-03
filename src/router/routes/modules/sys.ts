@@ -7,7 +7,7 @@ const sys: AppRouteModule = {
   name: 'sys',
   component: LAYOUT,
   meta: {
-    icon: 'grommet-icons:system',
+    icon: 'ion:settings-outline',
     title: '系统管理',
   },
   children: [
