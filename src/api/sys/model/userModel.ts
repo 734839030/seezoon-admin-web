@@ -41,6 +41,7 @@ export interface GetUserInfoModel {
   username: string;
   // 真实名字
   name: string;
+  photo?: string;
   // 介绍
   desc?: string;
 }

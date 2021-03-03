@@ -1,4 +1,5 @@
 import { RouteMeta } from '/@/router/types';
+
 export interface RouteItem {
   path: string;
   component: any;
@@ -10,14 +11,8 @@ export interface RouteItem {
   children?: RouteItem[];
 }
 
-/**
- * @description: Get menu interface
- */
-export interface getMenuListByIdParams {
-  id: number | string;
+export interface UserResources {
+  roles: string[];
+  permissions: string[];
+  routes: RouteItem[];
 }
-
-/**
- * @description: Get menu return value
- */
-export type getMenuListByIdParamsResultModel = RouteItem[];

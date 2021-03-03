@@ -2,7 +2,7 @@ import type { AppRouteRecordRaw, Menu } from '/@/router/types';
 import store from '/@/store/index';
 import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
 
-import { VuexModule, Mutation, Module, getModule, Action } from 'vuex-module-decorators';
+import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 
 import { PermissionModeEnum } from '/@/enums/appEnum';
 
@@ -11,8 +11,6 @@ import { userStore } from '/@/store/modules/user';
 
 import { asyncRoutes } from '/@/router/routes';
 import { filter } from '/@/utils/helper/treeHelper';
-import { toRaw } from 'vue';
-import { getMenuListById } from '/@/api/sys/menu';
 
 import { transformObjToRoute } from '/@/router/helper/routeHelper';
 import { transformRouteToMenu } from '/@/router/helper/menuHelper';
@@ -20,10 +18,13 @@ import { transformRouteToMenu } from '/@/router/helper/menuHelper';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
+import { getUserResources } from '/@/api/sys/user';
+import { RoleEnum } from '/@/enums/roleEnum';
 
 const { createMessage } = useMessage();
 const NAME = 'app-permission';
 hotModuleUnregisterModule(NAME);
+
 @Module({ dynamic: true, namespaced: true, store, name: NAME })
 class Permission extends VuexModule {
   // Permission code list
@@ -86,7 +87,12 @@ class Permission extends VuexModule {
   async buildRoutesAction(id?: number | string): Promise<AppRouteRecordRaw[]> {
     const { t } = useI18n();
     let routes: AppRouteRecordRaw[] = [];
-    const roleList = toRaw(userStore.getRoleListState);
+    const { roles, permissions, routes: backRoutes } = await getUserResources();
+    const roleList = roles as RoleEnum[];
+    userStore.commitRoleListState(roleList);
+    this.commitPermCodeListState(permissions);
+
+    //const roleList = toRaw(userStore.getRoleListState);
 
     const { permissionMode = PermissionModeEnum.ROLE } = appStore.getProjectConfig;
 
@@ -109,7 +115,7 @@ class Permission extends VuexModule {
       if (!paramId) {
         throw new Error('paramId is undefined!');
       }
-      let routeList = (await getMenuListById({ id: paramId })) as AppRouteRecordRaw[];
+      let routeList = backRoutes as AppRouteRecordRaw[];
 
       // Dynamically introduce components
       routeList = transformObjToRoute(routeList);
@@ -124,4 +130,5 @@ class Permission extends VuexModule {
     return routes;
   }
 }
+
 export const permissionStore = getModule<Permission>(Permission);

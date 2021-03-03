@@ -21,13 +21,13 @@
           <div v-if="pane.key === dataForm.type">
             <a-row>
               <a-col :md="12" :xs="24">
-                <a-form-item :rules="[]" label="上级菜单" name="parentId">
+                <a-form-item :rules="[]" label="上级" name="parentId">
                   <a-tree-select
                     v-model:value="dataForm.parentId"
                     :allowClear="true"
                     :load-data="loadMenuData"
                     :tree-data="menuTreeData"
-                    placeholder="请选择上级菜单"
+                    placeholder="请选择上级"
                   />
                 </a-form-item>
               </a-col>
@@ -60,12 +60,13 @@
               <a-col :md="12" :xs="24">
                 <a-form-item
                   :rules="[{ required: true, message: '打开位置不能为空', whitespace: true }]"
+                  help="当是外链时候有效"
                   label="打开位置"
                   name="target"
                 >
                   <a-radio-group v-model:value="dataForm.target" defaultValue="main">
-                    <a-radio-button value="main"> 主窗口 </a-radio-button>
-                    <a-radio-button value="_blank"> 新窗口 </a-radio-button>
+                    <a-radio-button value="main"> 主窗口</a-radio-button>
+                    <a-radio-button value="_blank"> 新窗口</a-radio-button>
                   </a-radio-group>
                 </a-form-item>
               </a-col>
@@ -102,7 +103,17 @@
             <a-row>
               <a-col :md="12" :xs="24">
                 <a-form-item :rules="[]" label="图标" name="icon">
-                  <a-input v-model:value="dataForm.icon" :maxlength="50" placeholder="选择图标" />
+                  <icon-picker
+                    v-model:value="dataForm.icon"
+                    @change="
+                      (value) => {
+                        dataForm.icon = value;
+                      }
+                    "
+                  />
+                  <!--
+                                    <a-input v-model:value="dataForm.icon" :maxlength="50" placeholder="选择图标" />
+                  -->
                 </a-form-item>
               </a-col>
               <a-col :md="12" :xs="24">
@@ -156,9 +167,11 @@
 <script>
   import { dataFormModalMixin } from '../../../mixins/common/data-form-mixin-modal';
   import { menuTreeMixin } from '../../../mixins/sys/menu-tree-mixin';
+  import { IconPicker } from '../../../components/Icon';
 
   export default {
     name: 'DataFormModal',
+    components: { IconPicker },
     mixins: [dataFormModalMixin, menuTreeMixin],
     emits: ['refreshQuery'],
     data() {

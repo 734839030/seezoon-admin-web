@@ -16,7 +16,7 @@ export const menuTreeMixin = {
           resolve();
           return;
         }
-        menuTree(treeNode ? treeNode.dataRef.value : 0, true).then(({ data }) => {
+        menuTree(treeNode ? treeNode.dataRef.value : 0, true).then((data) => {
           if (!treeNode) {
             this.menuTreeData = data;
           } else {

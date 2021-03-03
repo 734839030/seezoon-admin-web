@@ -2,7 +2,7 @@
   <a-form layout="inline">
     <a-form-item>
       <a-space>
-        <a-button type="primary" @click="handleQuery()"> 查询 </a-button>
+        <a-button type="primary" @click="handleQuery()"> 查询</a-button>
         <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
         <a-button type="default" @click="handleDataForm('添加')">添加</a-button>
       </a-space>
@@ -18,8 +18,9 @@
     class="mt-4 pr-4"
     size="small"
   >
-    <template #icon="{ text }">
-      <g-icon v-if="text" :icon="text" />
+    <template #name="{ record }">
+      <g-icon v-if="record.icon" :icon="record.icon" />
+      {{ record.name }}
     </template>
     <template #type="{ text }">
       <a-tag v-if="text === 1" color="blue"> 目录</a-tag>
@@ -70,18 +71,16 @@
             dataIndex: 'name',
             fixed: 'left',
             width: 180,
+            slots: { customRender: 'name' },
           },
           {
             title: '地址',
             dataIndex: 'url',
             ellipsis: true,
             width: 120,
-          },
-          {
-            title: '图标',
-            dataIndex: 'icon',
-            width: 80,
-            slots: { customRender: 'icon' },
+            customRender: function ({ text }) {
+              return text === null ? '-' : text;
+            },
           },
           {
             title: '类型',
@@ -142,7 +141,10 @@
           });
         } else {
           this.$refs.dataFormModal.show();
-          this.dataFormModal = { title: title, dataForm: { status: 1, type: 1, sort: 10 } };
+          this.dataFormModal = {
+            title: title,
+            dataForm: { status: 1, type: 1, sort: 1000, target: 'main' },
+          };
         }
       },
     },

@@ -24,6 +24,7 @@
       });
 
       const [registerModal, { setModalProps }] = useModalInner((data) => {
+        setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
@@ -42,7 +43,7 @@
           // TODO custom api
           console.log(values);
         } finally {
-          setModalProps({ confirmLoading: true });
+          setModalProps({ confirmLoading: false });
         }
       }
 

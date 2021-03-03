@@ -71,6 +71,7 @@
 <script lang="ts">
   import type { PropType } from 'vue';
   import { defineComponent } from 'vue';
+
   export default defineComponent({
     name: 'House',
     props: {
@@ -85,5 +86,5 @@
   });
 </script>
 <style lang="less" scoped>
-  @import './index.less';
+  @import 'src/views/sys/welcome/house/index.less';
 </style>

@@ -1,7 +1,7 @@
-import type { LoginParams, GetUserInfoModel } from '/@/api/sys/model/userModel';
+import type { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 
 import store from '/@/store/index';
-import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators';
+import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
 
 import { PageEnum } from '/@/enums/pageEnum';
@@ -14,7 +14,7 @@ import router from '/@/router';
 
 import { getUserInfo, loginApi, logout } from '/@/api/sys/user';
 
-import { Persistent, BasicKeys } from '/@/utils/cache/persistent';
+import { BasicKeys, Persistent } from '/@/utils/cache/persistent';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 import projectSetting from '/@/settings/projectSetting';
@@ -119,10 +119,10 @@ class User extends VuexModule {
   async getUserInfoAction() {
     // 获取菜单
     const userInfo = await getUserInfo();
-    const { roles } = userInfo;
-    const roleList = roles as RoleEnum[];
+    //const { roles } = userInfo;
+    //const roleList = roles as RoleEnum[];
     this.commitUserInfoState(userInfo);
-    this.commitRoleListState(roleList);
+    //  this.commitRoleListState(roleList);
     return userInfo;
   }
 
@@ -152,4 +152,5 @@ class User extends VuexModule {
     });
   }
 }
+
 export const userStore = getModule<User>(User);
