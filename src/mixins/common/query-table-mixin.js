@@ -10,7 +10,8 @@ export const queryTableMixin = {
       searchForm: {}, // 搜索条件
       labelCol: { span: 8 },
       wrapperCol: { span: 16 },
-      scroll: { x: 1000, y: 600 },
+      scrollX: 'max-content',
+      scrollY: 'max-content',
       data: [], // 表格数据
       pagination: {
         showSizeChanger: true,

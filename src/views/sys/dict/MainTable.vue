@@ -37,10 +37,10 @@
     :loading="loading"
     :pagination="pagination"
     :row-key="(record) => record.id"
-    :scroll="this.scroll"
+    :scroll="{ x: this.scrollX, y: this.scrollY }"
     bordered
     size="small"
-    class="mt-4"
+    class="mt-4 pr-4"
     @change="handleTableChange"
   >
     <template #status="{ text }">

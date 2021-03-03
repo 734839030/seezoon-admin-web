@@ -13,8 +13,8 @@
     :data-source="data"
     :loading="loading"
     :row-key="(record) => record.id"
-    :scroll="this.scroll"
-    class="mt-4"
+    :scroll="{ x: this.scrollX, y: this.scrollY }"
+    class="mt-4 pr-4"
     bordered
     size="small"
   >

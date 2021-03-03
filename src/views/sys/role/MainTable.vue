@@ -47,7 +47,7 @@
     :loading="loading"
     :pagination="pagination"
     :row-key="(record) => record.id"
-    :scroll="this.scroll"
+    :scroll="{ x: this.scrollX, y: this.scrollY }"
     bordered
     class="mt-4"
     size="small"

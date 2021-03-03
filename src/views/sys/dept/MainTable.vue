@@ -1,57 +1,55 @@
 <template>
-  <a-space direction="vertical">
-    <!-- 查询表单 -->
-    <a-form
-      ref="searchForm"
-      :model="searchForm"
-      layout="inline"
-      :labelCol="this.labelCol"
-      :wrapperCol="this.wrapperCol"
-    >
-      <a-form-item label="名称" name="name">
-        <a-input v-model:value="searchForm.name" :maxlength="100" placeholder="请输如名称" />
-      </a-form-item>
-      <a-form-item>
-        <a-space>
-          <a-button type="primary" @click="handleQuery()">查询</a-button>
-          <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
-          <a-button type="default" @click="handleDataForm('添加')">添加</a-button>
-        </a-space>
-      </a-form-item>
-    </a-form>
-    <a-row :gutter="16" class="mt-4">
-      <a-col :span="4">
-        <a-card size="small" title="部门">
-          <a-tree :load-data="loadDeptData" :tree-data="deptTreeData" @select="onDeptTreeSelect" />
-        </a-card>
-      </a-col>
-      <a-col :span="20">
-        <a-table
-          :columns="columns"
-          :data-source="data"
-          :loading="loading"
-          :pagination="pagination"
-          :row-key="(record) => record.id"
-          :scroll="this.scroll"
-          bordered
-          size="small"
-          @change="handleTableChange"
-        >
-          <template #action="{ record }">
-            <a @click="handleDataForm('编辑', record.id)">编辑</a>
-            <a-divider type="vertical" />
-            <a-popconfirm
-              placement="left"
-              title="确定删除本部门及下级部门？"
-              @confirm="handleDelete('/sys/dept/delete', record.id)"
-            >
-              <a>删除</a>
-            </a-popconfirm>
-          </template>
-        </a-table>
-      </a-col>
-    </a-row>
-  </a-space>
+  <!-- 查询表单 -->
+  <a-form
+    ref="searchForm"
+    :model="searchForm"
+    layout="inline"
+    :labelCol="this.labelCol"
+    :wrapperCol="this.wrapperCol"
+  >
+    <a-form-item label="名称" name="name">
+      <a-input v-model:value="searchForm.name" :maxlength="100" placeholder="请输如名称" />
+    </a-form-item>
+    <a-form-item>
+      <a-space>
+        <a-button type="primary" @click="handleQuery()">查询</a-button>
+        <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
+        <a-button type="default" @click="handleDataForm('添加')">添加</a-button>
+      </a-space>
+    </a-form-item>
+  </a-form>
+  <a-row :gutter="16" class="mt-4">
+    <a-col :span="4">
+      <a-card size="small" title="部门">
+        <a-tree :load-data="loadDeptData" :tree-data="deptTreeData" @select="onDeptTreeSelect" />
+      </a-card>
+    </a-col>
+    <a-col :span="20">
+      <a-table
+        :columns="columns"
+        :data-source="data"
+        :loading="loading"
+        :pagination="pagination"
+        :row-key="(record) => record.id"
+        :scroll="{ x: this.scrollX, y: this.scrollY }"
+        bordered
+        size="small"
+        @change="handleTableChange"
+      >
+        <template #action="{ record }">
+          <a @click="handleDataForm('编辑', record.id)">编辑</a>
+          <a-divider type="vertical" />
+          <a-popconfirm
+            placement="left"
+            title="确定删除本部门及下级部门？"
+            @confirm="handleDelete('/sys/dept/delete', record.id)"
+          >
+            <a>删除</a>
+          </a-popconfirm>
+        </template>
+      </a-table>
+    </a-col>
+  </a-row>
   <data-form-modal
     ref="dataFormModal"
     :data-form="dataFormModal.dataForm"
@@ -85,17 +83,14 @@
           {
             title: '联系人',
             dataIndex: 'contactUser',
-            width: 120,
           },
           {
             title: '联系电话',
             dataIndex: 'telephone',
-            width: 120,
           },
           {
             title: '序号',
             dataIndex: 'sort',
-            width: 120,
           },
           {
             title: '创建时间',

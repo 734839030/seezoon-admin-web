@@ -41,6 +41,96 @@ export function getBasicColumns(): BasicColumn[] {
       sorter: true,
       dataIndex: 'endTime',
     },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+    {
+      title: '结束时间',
+      width: 120,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
   ];
 }
 
