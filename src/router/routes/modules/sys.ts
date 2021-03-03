@@ -65,6 +65,15 @@ const sys: AppRouteModule = {
         title: '菜单管理',
       },
     },
+    {
+      path: 'file',
+      name: 'file',
+      component: () => import('/@/views/sys/file/index.vue'),
+      meta: {
+        icon: 'akar-icons:file',
+        title: '文件管理',
+      },
+    },
   ],
 };
 

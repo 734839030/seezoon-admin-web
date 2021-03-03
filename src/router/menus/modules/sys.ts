@@ -31,6 +31,10 @@ const menu: MenuModule = {
         path: 'menu',
         name: '菜单管理',
       },
+      {
+        path: 'file',
+        name: '文件管理',
+      },
     ],
   },
 };
