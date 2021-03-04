@@ -65,9 +65,9 @@
       </ACol>
     </ARow>
 
-    <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
+    <Divider v-if="false" class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 
-    <div :class="`${prefixCls}-sign-in-way`" class="flex justify-evenly enter-x">
+    <div v-if="false" :class="`${prefixCls}-sign-in-way`" class="flex justify-evenly enter-x">
       <GithubFilled />
       <WechatFilled />
       <AlipayCircleFilled />
@@ -150,12 +150,12 @@
             })
           );
           /*if (userInfo) {
-      notification.success({
-        message: t('sys.login.loginSuccessTitle'),
-        description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
-        duration: 3,
-      });
-    }*/
+    notification.success({
+      message: t('sys.login.loginSuccessTitle'),
+      description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+      duration: 3,
+    });
+  }*/
         } finally {
           loading.value = false;
         }
