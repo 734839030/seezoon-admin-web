@@ -1,8 +1,9 @@
 import { defineComponent } from 'vue';
-import { Tabs, Row, Col, Progress, Divider } from 'ant-design-vue';
-import { CollapseContainer } from '/@/components/Container/index';
+import { Col, Divider, Progress, Row, Tabs } from 'ant-design-vue';
+import { CollapseContainer } from '/@/components/Container';
 import TrendLine from './TrendLine.vue';
 import './flow-ana.less';
+
 const prefixCls = 'flow-analysis';
 export default defineComponent({
   name: 'AnalysisFLow',

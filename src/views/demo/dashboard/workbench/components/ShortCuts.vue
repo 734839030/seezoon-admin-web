@@ -1,7 +1,7 @@
 <template>
-  <CollapseContainer class="shortcuts" title="快捷入口" :canExpan="false">
+  <CollapseContainer :canExpan="false" class="shortcuts" title="快捷入口">
     <template #action>
-      <a-button size="small" type="link"> 新建 </a-button>
+      <a-button size="small" type="link"> 新建</a-button>
     </template>
     <a-row>
       <template v-for="item in shortCuts" :key="item.img">
@@ -23,8 +23,8 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { Row, Col } from 'ant-design-vue';
-  import { CollapseContainer } from '/@/components/Container/index';
+  import { Col, Row } from 'ant-design-vue';
+  import { CollapseContainer } from '/@/components/Container';
 
   import { RightOutlined } from '@ant-design/icons-vue';
   import wokbImg1 from '/@/assets/images/dashboard/wokb/attendance.png';
@@ -35,6 +35,7 @@
   import wokbImg6 from '/@/assets/images/dashboard/wokb/travel.png';
   import wokbImg7 from '/@/assets/images/dashboard/wokb/performance.png';
   import wokbImg8 from '/@/assets/images/dashboard/wokb/approve.png';
+
   const shortCuts = [
     {
       img: wokbImg1,
@@ -83,8 +84,8 @@
 
       &-img {
         width: 36px;
-        margin-left: auto;
         margin-right: auto;
+        margin-left: auto;
       }
 
       &-all {

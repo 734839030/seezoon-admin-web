@@ -1,5 +1,5 @@
 <template>
-  <CollapseContainer class="news-list" title="动态" :canExpan="false">
+  <CollapseContainer :canExpan="false" class="news-list" title="动态">
     <ScrollContainer>
       <List>
         <template v-for="item in newList" :key="item.id">
@@ -37,10 +37,11 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { List } from 'ant-design-vue';
-  import { CollapseContainer, ScrollContainer } from '/@/components/Container/index';
+  import { CollapseContainer, ScrollContainer } from '/@/components/Container';
   import headerImg from '/@/assets/images/header.jpg';
 
   import { newList } from '../data';
+
   export default defineComponent({
     components: {
       List,

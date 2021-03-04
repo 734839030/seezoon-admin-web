@@ -1,5 +1,5 @@
 <template>
-  <CollapseContainer class="todo-list" title="待办事项" :canExpan="false">
+  <CollapseContainer :canExpan="false" class="todo-list" title="待办事项">
     <template #title>
       <span> 待办事项 <span class="todo-list__total">30</span> </span>
     </template>
@@ -23,14 +23,14 @@
             </template>
           </ListItemMeta>
           <a-button type="link">
-            <Tag color="blue"> 待审批 </Tag>
+            <Tag color="blue"> 待审批</Tag>
           </a-button>
         </ListItem>
       </template>
     </List>
     <div class="todo-list__all">
       <Tooltip placement="topRight">
-        <template #title> 查看更多 </template>
+        <template #title> 查看更多</template>
         <EllipsisOutlined />
       </Tooltip>
     </div>
@@ -39,7 +39,7 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { List, Tag, Tooltip } from 'ant-design-vue';
-  import { CollapseContainer } from '/@/components/Container/index';
+  import { CollapseContainer } from '/@/components/Container';
 
   import { EllipsisOutlined } from '@ant-design/icons-vue';
   import { todoList } from '../data';

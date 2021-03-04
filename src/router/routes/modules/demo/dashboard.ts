@@ -16,7 +16,7 @@ const dashboard: AppRouteModule = {
     {
       path: 'workbench',
       name: 'Workbench',
-      component: () => import('/@/views/dashboard/workbench/index.vue'),
+      component: () => import('/@/views/demo/dashboard/workbench/index.vue'),
       meta: {
         title: t('routes.dashboard.workbench'),
       },
@@ -24,7 +24,7 @@ const dashboard: AppRouteModule = {
     {
       path: 'analysis',
       name: 'Analysis',
-      component: () => import('/@/views/dashboard/analysis/index.vue'),
+      component: () => import('/@/views/demo/dashboard/analysis/index.vue'),
       meta: {
         title: t('routes.dashboard.analysis'),
       },

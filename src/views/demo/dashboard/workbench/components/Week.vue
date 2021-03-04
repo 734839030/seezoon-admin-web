@@ -1,12 +1,12 @@
 <template>
-  <CollapseContainer title="销售统计" :canExpan="false">
+  <CollapseContainer :canExpan="false" title="销售统计">
     <div ref="chartRef" :style="{ width: '100%' }"></div>
   </CollapseContainer>
 </template>
 <script lang="ts">
-  import { defineComponent, Ref, ref, onMounted } from 'vue';
+  import { defineComponent, onMounted, ref, Ref } from 'vue';
 
-  import { CollapseContainer } from '/@/components/Container/index';
+  import { CollapseContainer } from '/@/components/Container';
   import { useApexCharts } from '/@/hooks/web/useApexCharts';
 
   export default defineComponent({

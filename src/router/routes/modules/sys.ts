@@ -12,6 +12,15 @@ const sys: AppRouteModule = {
   },
   children: [
     {
+      path: '/sys/home',
+      name: '/sys/home',
+      component: () => import('/@/views/sys/home/index.vue'),
+      meta: {
+        title: '首页',
+        icon: 'bx:bx-home',
+      },
+    },
+    {
       path: '/sys/dept',
       name: '/sys/dept',
       component: () => import('/@/views/sys/dept/index.vue'),
@@ -72,6 +81,25 @@ const sys: AppRouteModule = {
       meta: {
         icon: 'akar-icons:file',
         title: '文件管理',
+      },
+    },
+    {
+      path: '/doc',
+      name: 'doc',
+      component: () => import('/@/views/sys/iframe/FrameBlank.vue'),
+      meta: {
+        frameSrc: 'https://vvbin.cn/docs/',
+        icon: 'akar-icons:file',
+        title: '内部',
+      },
+    },
+    {
+      path: 'https://vvbin.cn/docs/',
+      name: 'docex',
+      component: () => import('/@/views/sys/iframe/FrameBlank.vue'),
+      meta: {
+        icon: 'akar-icons:file',
+        title: '外部',
       },
     },
   ],

@@ -2,10 +2,10 @@
   <!-- 查询表单 -->
   <a-form
     ref="searchForm"
-    :model="searchForm"
-    layout="inline"
     :labelCol="this.labelCol"
+    :model="searchForm"
     :wrapperCol="this.wrapperCol"
+    layout="inline"
   >
     <a-form-item label="名称" name="name">
       <a-input v-model:value="searchForm.name" :maxlength="100" placeholder="请输如名称" />
@@ -31,7 +31,6 @@
         :loading="loading"
         :pagination="pagination"
         :row-key="(record) => record.id"
-        :scroll="{ x: 1200 }"
         bordered
         size="small"
         @change="handleTableChange"
@@ -81,7 +80,7 @@
           {
             title: '父部门',
             dataIndex: 'parentName',
-            width: 180,
+            ellipsis: true,
           },
           {
             title: '联系人',
@@ -101,12 +100,12 @@
           {
             title: '创建时间',
             dataIndex: 'createTime',
-            width: 180,
+            ellipsis: true,
           },
           {
             title: '修改时间',
             dataIndex: 'updateTime',
-            width: 180,
+            ellipsis: true,
           },
           {
             title: '操作',
@@ -138,7 +137,7 @@
           });
         } else {
           this.$refs.dataFormModal.show();
-          this.dataFormModal = { title: title, dataForm: { sort: 10 } };
+          this.dataFormModal = { title: title, dataForm: { sort: 1000 } };
         }
       },
       handleDeleteCb(id) {

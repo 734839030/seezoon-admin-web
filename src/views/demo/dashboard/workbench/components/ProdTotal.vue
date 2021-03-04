@@ -1,8 +1,8 @@
 <template>
   <a-row class="prod-total">
     <template v-for="(item, index) in wokbProd" :key="item.type">
-      <a-col :xs="12" :sm="6" class="prod-total__item" :class="`prod-total__item-${index}`">
-        <div class="img" :class="`prod-total__item-${index}-img`"></div>
+      <a-col :class="`prod-total__item-${index}`" :sm="6" :xs="12" class="prod-total__item">
+        <div :class="`prod-total__item-${index}-img`" class="img"></div>
         <div>{{ item.amount }}</div>
         <span>{{ item.type }}</span>
       </a-col>
@@ -11,7 +11,7 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { Row, Col } from 'ant-design-vue';
+  import { Col, Row } from 'ant-design-vue';
 
   import { wokbProd } from '../data';
   // import {ProdTypeEnum} from '@/api/dashboard/model/wokbModel'
@@ -53,7 +53,7 @@
         background: rgba(254, 97, 178, 0.1);
 
         &-img {
-          background: url(../../../../assets/images/dashboard/wokb/datashow1.png) no-repeat;
+          background: url(src/assets/images/dashboard/wokb/datashow1.png) no-repeat;
         }
 
         div {

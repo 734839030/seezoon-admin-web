@@ -36,6 +36,14 @@ const menu: MenuModule = {
         path: '/sys/file',
         name: '文件管理',
       },
+      {
+        path: '/doc',
+        name: '内部',
+      },
+      {
+        path: 'https://vvbin.cn/docs/',
+        name: '外部',
+      },
     ],
   },
 };

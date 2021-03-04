@@ -5,11 +5,11 @@
         <p class="grow-card__title">
           {{ info.title }}
         </p>
-        <CountTo prefix="$" :startVal="1" :endVal="info.price" />
+        <CountTo :endVal="info.price" :startVal="1" prefix="$" />
       </div>
       <img :src="info.icon" />
     </div>
-    <div class="grow-card-footer" :class="{ 'is-up': info.up }">
+    <div :class="{ 'is-up': info.up }" class="grow-card-footer">
       <Statistic :value="info.percent">
         <template #prefix>
           <img :src="info.up ? riseSvg : downSvg" />
@@ -22,7 +22,7 @@
 <script lang="ts">
   import { defineComponent, PropType } from 'vue';
   import { Statistic } from 'ant-design-vue';
-  import { CountTo } from '/@/components/CountTo/index';
+  import { CountTo } from '/@/components/CountTo';
 
   import riseSvg from '/@/assets/svg/dashboard/analysis-rise.svg';
   import downSvg from '/@/assets/svg/dashboard/analysis-down.svg';

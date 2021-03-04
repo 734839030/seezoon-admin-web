@@ -86,5 +86,5 @@
   });
 </script>
 <style lang="less" scoped>
-  @import 'src/views/sys/welcome/house/index.less';
+  @import 'src/views/sys/home/house/index.less';
 </style>

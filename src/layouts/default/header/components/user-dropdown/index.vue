@@ -1,7 +1,7 @@
 <template>
-  <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
+  <Dropdown :overlayClassName="`${prefixCls}-dropdown-overlay`" placement="bottomLeft">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="headerImg" />
+      <img :class="`${prefixCls}__header`" :src="getUserInfo.photo || headerImg" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
           {{ getUserInfo.name }}
@@ -12,10 +12,10 @@
     <template #overlay>
       <Menu @click="handleMenuClick">
         <MenuItem
+          v-if="getShowDoc"
           key="doc"
           :text="t('layout.header.dropdownItemDoc')"
           icon="ion:document-text-outline"
-          v-if="getShowDoc"
         />
         <MenuDivider v-if="getShowDoc" />
         <MenuItem
@@ -37,7 +37,7 @@
   // components
   import { Dropdown, Menu } from 'ant-design-vue';
 
-  import { defineComponent, computed } from 'vue';
+  import { computed, defineComponent } from 'vue';
 
   import { DOC_URL } from '/@/settings/siteSetting';
 
@@ -73,10 +73,9 @@
       const { getShowDoc } = useHeaderSetting();
 
       const getUserInfo = computed(() => {
-        const { name = '', desc } = userStore.getUserInfoState || {};
-        return { name, desc };
+        const { name = '', desc, photo } = userStore.getUserInfoState || {};
+        return { name, desc, photo };
       });
-
       const [register, { openModal }] = useModal();
 
       function handleLock() {

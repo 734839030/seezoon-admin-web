@@ -12,8 +12,8 @@
     :columns="columns"
     :data-source="data"
     :loading="loading"
+    :pagination="false"
     :row-key="(record) => record.id"
-    :scroll="{ x: 1200 }"
     bordered
     class="mt-4 pr-4"
     size="small"
@@ -108,12 +108,12 @@
           {
             title: '创建时间',
             dataIndex: 'createTime',
-            width: 180,
+            ellipsis: true,
           },
           {
             title: '修改时间',
             dataIndex: 'updateTime',
-            width: 180,
+            ellipsis: true,
           },
           {
             title: '操作',

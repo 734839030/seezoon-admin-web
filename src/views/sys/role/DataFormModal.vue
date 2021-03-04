@@ -94,6 +94,7 @@
               :checkable="true"
               :load-data="loadMenuData"
               :selectable="false"
+              :show-line="true"
               :tree-data="menuTreeData"
             />
           </a-form-item>
