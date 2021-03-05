@@ -105,6 +105,7 @@ export default defineComponent({
           ? props.schema.isAdvanced
           : true
         : true;
+
       let isShow = true;
       let isIfShow = true;
 
@@ -311,11 +312,12 @@ export default defineComponent({
       const realColProps = { ...baseColProps, ...colProps };
       const { isIfShow, isShow } = getShow();
 
+      const values = unref(getValues);
       const getContent = () => {
         return colSlot
-          ? getSlot(slots, colSlot, unref(getValues))
+          ? getSlot(slots, colSlot, values)
           : renderColContent
-          ? renderColContent(unref(getValues))
+          ? renderColContent(values)
           : renderItem();
       };
 

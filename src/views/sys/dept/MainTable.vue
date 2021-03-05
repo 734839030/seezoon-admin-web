@@ -156,7 +156,7 @@
             resolve();
             return;
           }
-          deptTree(treeNode ? treeNode.dataRef.value : 0).then((data) => {
+          deptTree(treeNode ? treeNode.dataRef.value : 0, true).then((data) => {
             if (!treeNode) {
               this.deptTreeData = data;
             } else {

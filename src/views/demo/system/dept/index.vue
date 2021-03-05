@@ -56,7 +56,7 @@
         showTableSetting: true,
         bordered: true,
         showIndexColumn: false,
-        indentSize: 20,
+        canResize: false,
         actionColumn: {
           width: 80,
           title: '操作',

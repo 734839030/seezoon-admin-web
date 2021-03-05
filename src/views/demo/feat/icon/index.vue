@@ -12,27 +12,27 @@
       </div>
     </CollapseContainer>
 
-    <CollapseContainer class="my-5" title="IconIfy 组件使用">
+    <CollapseContainer title="IconIfy 组件使用" class="my-5">
       <div class="flex justify-around flex-wrap">
-        <Icon :size="30" icon="ion:layers-outline" />
-        <Icon :size="30" icon="ion:bar-chart-outline" />
-        <Icon :size="30" icon="ion:tv-outline" />
-        <Icon :size="30" icon="ion:settings-outline" />
+        <Icon icon="ion:layers-outline" :size="30" />
+        <Icon icon="ion:bar-chart-outline" :size="30" />
+        <Icon icon="ion:tv-outline" :size="30" />
+        <Icon icon="ion:settings-outline" :size="30" />
       </div>
     </CollapseContainer>
 
-    <CollapseContainer class="my-5" title="图标选择器">
+    <CollapseContainer title="图标选择器" class="my-5">
       <div class="flex justify-around flex-wrap">
         <IconPicker />
       </div>
     </CollapseContainer>
 
     <Alert
-      description="Icon组件基本包含所有的图标,在下面网址内你可以查询到你想要的任何图标。并且打包只会打包所用到的图标。"
-      message="推荐使用Iconify组件"
       show-icon
+      message="推荐使用Iconify组件"
+      description="Icon组件基本包含所有的图标,在下面网址内你可以查询到你想要的任何图标。并且打包只会打包所用到的图标。"
     />
-    <a-button type="link" @click="toIconify"> Iconify 图标大全</a-button>
+    <a-button type="link" @click="toIconify"> Iconify 图标大全 </a-button>
   </PageWrapper>
 </template>
 <script lang="ts">
@@ -49,7 +49,7 @@
     WechatFilled,
   } from '@ant-design/icons-vue';
 
-  import { Icon, IconPicker } from '/@/components/Icon/index';
+  import { Icon, IconPicker, SvgIcon } from '/@/components/Icon/index';
 
   import { openWindow } from '/@/utils';
   import { PageWrapper } from '/@/components/Page';
@@ -68,6 +68,7 @@
       Icon,
       Alert,
       IconPicker,
+      SvgIcon,
     },
     setup() {
       return {

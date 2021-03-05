@@ -110,7 +110,7 @@
       const { prefixCls } = useDesign('icon-picker');
       const { t } = useI18n();
       const [debounceHandleSearchChange] = useDebounce(handleSearchChange, 100);
-      const { clipboardRef, isSuccessRef } = useCopyToClipboard(props.value);
+      // const { clipboardRef, isSuccessRef } = useCopyToClipboard(props.value);
       const { createMessage } = useMessage();
 
       const { getPaginationList, getTotal, setCurrentPage } = usePagination(
@@ -132,7 +132,9 @@
       }
 
       function handleClick(icon: string) {
+        const { clipboardRef, isSuccessRef } = useCopyToClipboard(props.value);
         currentSelect.value = icon;
+        debugger;
         if (props.copy) {
           clipboardRef.value = icon;
           if (unref(isSuccessRef)) {

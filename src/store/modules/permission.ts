@@ -106,8 +106,8 @@ class Permission extends VuexModule {
       //  If you are sure that you do not need to do background dynamic permissions, please comment the entire judgment below
     } else if (permissionMode === PermissionModeEnum.BACK) {
       createMessage.loading({
-        // content: t('sys.app.menuLoading'),
-        content: '菜单加载中...',
+        content: 'Loading menu...',
+        // content: 't('sys.app.menuLoading')',
         duration: 1,
       });
       // Here to get the background routing menu logic to modify by yourself

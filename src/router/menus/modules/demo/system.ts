@@ -7,32 +7,29 @@ const menu: MenuModule = {
     name: t('routes.demo.system.moduleName'),
     path: '/system',
     tag: {
-      dot: true,
+      content: 'new',
     },
     children: [
       {
         path: 'account',
         name: t('routes.demo.system.account'),
-        tag: {
-          dot: true,
-          type: 'warn',
-        },
       },
-
+      {
+        path: 'role',
+        name: t('routes.demo.system.role'),
+      },
+      {
+        path: 'menu',
+        name: t('routes.demo.system.menu'),
+      },
       {
         path: 'dept',
         name: t('routes.demo.system.dept'),
-        tag: {
-          content: 'new',
-        },
       },
 
       {
         path: 'changePassword',
         name: t('routes.demo.system.password'),
-        tag: {
-          content: 'new',
-        },
       },
     ],
   },

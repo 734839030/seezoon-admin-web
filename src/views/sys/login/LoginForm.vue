@@ -94,6 +94,8 @@
   import { userStore } from '/@/store/modules/user';
   import { LoginStateEnum, useFormRules, useFormValid, useLoginState } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import { useKeyPress } from '/@/hooks/event/useKeyPress';
+  import { KeyCodeEnum } from '/@/enums/keyCodeEnum';
 
   export default defineComponent({
     name: 'LoginForm',
@@ -133,6 +135,13 @@
       });
 
       const { validForm } = useFormValid(formRef);
+      useKeyPress(['enter'], (events) => {
+        const keyCode = events.keyCode;
+
+        if (keyCode === KeyCodeEnum.ENTER) {
+          handleLogin();
+        }
+      });
 
       const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
 

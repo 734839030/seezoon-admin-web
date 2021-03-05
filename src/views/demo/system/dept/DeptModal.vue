@@ -21,9 +21,6 @@
         labelWidth: 100,
         schemas: formSchema,
         showActionButtonGroup: false,
-        actionColOptions: {
-          span: 23,
-        },
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
