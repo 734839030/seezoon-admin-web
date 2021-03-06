@@ -105,7 +105,6 @@
     "vite": "^2.0.5",
     "vite-plugin-compression": "^0.2.3",
     "vite-plugin-html": "^2.0.3",
-    "vite-plugin-imagemin": "^0.2.9",
     "vite-plugin-mock": "^2.2.0",
     "vite-plugin-purge-icons": "^0.7.0",
     "vite-plugin-pwa": "^0.5.6",
