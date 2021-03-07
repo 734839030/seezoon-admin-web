@@ -18,7 +18,7 @@
     </a-form-item>
     <a-form-item>
       <a-space>
-        <a-button type="primary" @click="handleQuery()">查询</a-button>
+        <a-button v-auth="'sys:file:query'" type="primary" @click="handleQuery()">查询</a-button>
         <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
         <a-upload
           :customRequest="customRequest"
@@ -27,7 +27,7 @@
           action="/sys/file/upload"
           name="file"
         >
-          <a-button :loading="uploadBtnLoading" type="default">
+          <a-button v-auth="'sys:file:upload'" :loading="uploadBtnLoading" type="default">
             <cloud-upload-outlined />
           </a-button>
         </a-upload>
@@ -46,16 +46,16 @@
     @change="handleTableChange"
   >
     <template #action="{ record }">
-      <a @click="preview(record.url)">预览</a>
+      <a v-auth="'sys:file:query'" @click="preview(record.url)">预览</a>
       <a-divider type="vertical" />
-      <a @click="download(record.id)">下载</a>
+      <a v-auth="'sys:file:down'" @click="download(record.id)">下载</a>
       <a-divider type="vertical" />
       <a-popconfirm
         placement="left"
         title="确定删除？"
         @confirm="handleDelete('/sys/file/delete', record.id)"
       >
-        <a>删除</a>
+        <a v-auth="'sys:file:delete'">删除</a>
       </a-popconfirm>
     </template>
   </a-table>

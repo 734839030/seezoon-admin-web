@@ -2,10 +2,10 @@
   <!-- 查询表单 -->
   <a-form
     ref="searchForm"
-    :model="searchForm"
-    layout="inline"
     :labelCol="this.labelCol"
+    :model="searchForm"
     :wrapperCol="this.wrapperCol"
+    layout="inline"
   >
     <a-form-item label="参数名" name="name">
       <a-input v-model:value="searchForm.name" :maxlength="50" placeholder="请输入参数名" />
@@ -15,9 +15,11 @@
     </a-form-item>
     <a-form-item>
       <a-space>
-        <a-button type="primary" @click="handleQuery()">查询</a-button>
+        <a-button v-auth="'sys:param:query'" type="primary" @click="handleQuery()">查询</a-button>
         <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
-        <a-button type="default" @click="handleDataForm('添加')">添加</a-button>
+        <a-button v-auth="'sys:param:save'" type="default" @click="handleDataForm('添加')"
+          >添加
+        </a-button>
       </a-space>
     </a-form-item>
   </a-form>
@@ -28,8 +30,8 @@
     :pagination="pagination"
     :row-key="(record) => record.id"
     bordered
-    size="small"
     class="mt-4 pr-4"
+    size="small"
     @change="handleTableChange"
   >
     <template #status="{ text }">
@@ -38,14 +40,14 @@
       </a-tag>
     </template>
     <template #action="{ record }">
-      <a @click="handleDataForm('编辑', record.id)">编辑</a>
+      <a v-auth="'sys:param:update'" @click="handleDataForm('编辑', record.id)">编辑</a>
       <a-divider type="vertical" />
       <a-popconfirm
         placement="left"
         title="确定删除？"
         @confirm="handleDelete('/sys/param/delete', record.id)"
       >
-        <a>删除</a>
+        <a v-auth="'sys:param:delete'">删除</a>
       </a-popconfirm>
     </template>
   </a-table>

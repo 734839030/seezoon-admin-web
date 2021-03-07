@@ -8,6 +8,7 @@ import type { App, Directive, DirectiveBinding } from 'vue';
 import { appStore } from '/@/store/modules/app';
 import { usePermission } from '/@/hooks/web/usePermission';
 import { PermissionModeEnum } from '/@/enums/appEnum';
+
 const { hasPermission } = usePermission();
 
 function isAuth(el: Element, binding: any) {
@@ -23,8 +24,8 @@ function isBackMode() {
 }
 
 const mounted = (el: Element, binding: DirectiveBinding<any>) => {
-  if (isBackMode()) return;
-  isAuth(el, binding);
+  if (isBackMode()) isAuth(el, binding);
+  return;
 };
 
 const updated = (el: Element, binding: DirectiveBinding<any>) => {

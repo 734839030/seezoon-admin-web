@@ -2,10 +2,10 @@
   <!-- 查询表单 -->
   <a-form
     ref="searchForm"
-    :model="searchForm"
-    layout="inline"
     :labelCol="this.labelCol"
+    :model="searchForm"
     :wrapperCol="this.wrapperCol"
+    layout="inline"
   >
     <a-form-item label="登录名" name="username">
       <a-input v-model:value="searchForm.username" :maxlength="50" placeholder="请输入登录名" />
@@ -29,9 +29,11 @@
     </a-form-item>
     <a-form-item>
       <a-space>
-        <a-button type="primary" @click="handleQuery()">查询</a-button>
+        <a-button v-auth="'sys:user:query'" type="primary" @click="handleQuery()">查询</a-button>
         <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
-        <a-button type="default" @click="handleDataForm('添加')">添加</a-button>
+        <a-button v-auth="'sys:user:save'" type="default" @click="handleDataForm('添加')"
+          >添加
+        </a-button>
       </a-space>
     </a-form-item>
   </a-form>
@@ -62,14 +64,14 @@
           </a-tag>
         </template>
         <template #action="{ record }">
-          <a @click="handleDataForm('编辑', record.id)">编辑</a>
+          <a v-auth="'sys:user:update'" @click="handleDataForm('编辑', record.id)">编辑</a>
           <a-divider type="vertical" />
           <a-popconfirm
             placement="left"
             title="确定删除？"
             @confirm="handleDelete('/sys/user/delete', record.id)"
           >
-            <a>删除</a>
+            <a v-auth="'sys:user:delete'">删除</a>
           </a-popconfirm>
         </template>
       </a-table>

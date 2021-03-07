@@ -2,10 +2,10 @@
   <!-- 查询表单 -->
   <a-form
     ref="searchForm"
-    :model="searchForm"
-    layout="inline"
     :labelCol="this.labelCol"
+    :model="searchForm"
     :wrapperCol="this.wrapperCol"
+    layout="inline"
   >
     <a-form-item label="编码" name="code">
       <a-input v-model:value="searchForm.code" :maxlength="50" placeholder="角色编码" />
@@ -18,8 +18,8 @@
         v-model:value="searchForm.dataScope"
         :allowClear="true"
         :options="dataScopeArray"
-        style="width: 130px"
         placeholder="请选择"
+        style="width: 130px"
       />
     </a-form-item>
     <a-form-item label="状态" name="status">
@@ -35,9 +35,11 @@
     </a-form-item>
     <a-form-item>
       <a-space>
-        <a-button type="primary" @click="handleQuery()">查询</a-button>
+        <a-button v-auth="'sys:role:query'" type="primary" @click="handleQuery()">查询</a-button>
         <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
-        <a-button type="default" @click="handleDataForm('添加')">添加</a-button>
+        <a-button v-auth="'sys:role:save'" type="default" @click="handleDataForm('添加')"
+          >添加
+        </a-button>
       </a-space>
     </a-form-item>
   </a-form>
@@ -58,16 +60,18 @@
       </a-tag>
     </template>
     <template #action="{ record }">
-      <a @click="this.$refs.roleAssignModal.show(record.id, record.name)">分配</a>
+      <a v-auth="'sys:role:assign'" @click="this.$refs.roleAssignModal.show(record.id, record.name)"
+        >分配</a
+      >
       <a-divider type="vertical" />
-      <a @click="handleDataForm('编辑', record.id)">编辑</a>
+      <a v-auth="'sys:role:update'" @click="handleDataForm('编辑', record.id)">编辑</a>
       <a-divider type="vertical" />
       <a-popconfirm
         placement="left"
         title="确定删除？"
         @confirm="handleDelete('/sys/role/delete', record.id)"
       >
-        <a>删除</a>
+        <a v-auth="'sys:role:delete'">删除</a>
       </a-popconfirm>
     </template>
   </a-table>

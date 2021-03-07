@@ -2,9 +2,11 @@
   <a-form layout="inline">
     <a-form-item>
       <a-space>
-        <a-button type="primary" @click="handleQuery()"> 查询</a-button>
+        <a-button v-auth="'sys:menu:query'" type="primary" @click="handleQuery()"> 查询</a-button>
         <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
-        <a-button type="default" @click="handleDataForm('添加')">添加</a-button>
+        <a-button v-auth="'sys:menu:save'" type="default" @click="handleDataForm('添加')"
+          >添加</a-button
+        >
       </a-space>
     </a-form-item>
   </a-form>
@@ -34,14 +36,14 @@
       </a-tag>
     </template>
     <template #action="{ record }">
-      <a @click="handleDataForm('编辑', record.id)">编辑</a>
+      <a v-auth="'sys:menu:update'" @click="handleDataForm('编辑', record.id)">编辑</a>
       <a-divider type="vertical" />
       <a-popconfirm
         :title="record.children ? '子节点将一起删除，确定删除?' : '确定删除?'"
         placement="left"
         @confirm="handleDelete('/sys/menu/delete', record.id)"
       >
-        <a>删除</a>
+        <a v-auth="'sys:menu:delete'">删除</a>
       </a-popconfirm>
     </template>
   </a-table>
