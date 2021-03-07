@@ -52,6 +52,7 @@
   import { growCardList, taskList } from './data';
 
   export default defineComponent({
+    name: 'DemoHome',
     components: {
       GrowCard,
       CollapseContainer,

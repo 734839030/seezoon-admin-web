@@ -108,7 +108,7 @@ class Permission extends VuexModule {
       createMessage.loading({
         content: 'Loading menu...',
         // content: 't('sys.app.menuLoading')',
-        duration: 1,
+        duration: 2,
       });
       // Here to get the background routing menu logic to modify by yourself
       const paramId = id || userStore.getUserInfoState.userId;
