@@ -184,17 +184,6 @@
       };
     },
     methods: {
-      checkParamKey(rule, value) {
-        return this.uniqueFieldSimpleValidation(
-          '/sys/menu/checkParamKey',
-          value,
-          {
-            id: this.dataForm.id,
-            paramKey: value,
-          },
-          `唯一键 ${value} 已存在`
-        );
-      },
       // 保存后回调
       handleOkCb() {
         this.$emit('refreshQuery');

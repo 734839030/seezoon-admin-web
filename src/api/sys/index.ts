@@ -9,6 +9,7 @@ import { Dict } from '/@/api/sys/model/dictModel';
 export function deptTree(parentId: number, includeChild?: boolean) {
   return defHttp.postForm('/sys/dept/tree', { parentId: parentId, includeChild: includeChild });
 }
+
 /**
  * menu树
  * @param parentId
@@ -23,7 +24,7 @@ export function menuTree(parentId, includeChild) {
  * @returns {Promise<[]>}
  */
 export async function getTypes() {
-  const data = await defHttp.get({ url: '/sys/dict/queryTypes' });
+  const data = await defHttp.get({ url: '/sys/dict/query_types' });
   const dictTypes: Dict[] = [];
   for (const type of data.values()) {
     dictTypes.push({ label: type, value: type });

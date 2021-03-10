@@ -1,5 +1,5 @@
 import '/@/design/index.less';
-import 'windi.css';
+import '@virtual/windi.css';
 
 // Do not introduce on-demand in local development?
 // In the local development for on-demand introduction, the number of browser requests will increase by about 20%.
@@ -17,8 +17,10 @@ import { setupStore } from '/@/store';
 import { setupErrorHandle } from '/@/logics/error-handle';
 import { setupGlobDirectives } from '/@/directives';
 import { setupI18n } from '/@/locales/setupI18n';
-
 import { registerGlobComp } from '/@/components/registerGlobComp';
+
+// router-guard
+import '/@/router/guard';
 
 // Register icon Sprite
 import 'vite-plugin-svg-icons/register';
@@ -33,6 +35,7 @@ import { isDevMode } from '/@/utils/env';
 
   // Multilingual configuration
   await setupI18n(app);
+
   // Configure routing
   setupRouter(app);
 
@@ -52,7 +55,7 @@ import { isDevMode } from '/@/utils/env';
 
   // The development environment takes effect
   if (isDevMode()) {
-    app.config.performance = true;
+    // app.config.performance = true;
     window.__APP__ = app;
   }
 })();

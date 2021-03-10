@@ -98,7 +98,7 @@
     methods: {
       checkName(rule, value) {
         return this.uniqueFieldSimpleValidation(
-          '/sys/dept/checkName',
+          '/sys/dept/check_name',
           value,
           {
             id: this.dataForm.id,

@@ -112,7 +112,7 @@
     methods: {
       checkParamKey(rule, value) {
         return this.uniqueFieldSimpleValidation(
-          '/sys/param/checkParamKey',
+          '/sys/param/check_param_key',
           value,
           {
             id: this.dataForm.id,

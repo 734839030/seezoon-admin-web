@@ -147,7 +147,7 @@
       },
       checkName(rule, value) {
         return this.uniqueFieldSimpleValidation(
-          '/sys/role/checkName',
+          '/sys/role/check_name',
           value,
           {
             id: this.dataForm.id,

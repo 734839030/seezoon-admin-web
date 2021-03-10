@@ -128,7 +128,7 @@
             return;
           }
           defHttp
-            .postForm('/sys/dict/checkTypeAndCode', {
+            .postForm('/sys/dict/check_type_and_code', {
               id: this.dataForm.id,
               type: this.dataForm.type,
               code: this.dataForm.code,

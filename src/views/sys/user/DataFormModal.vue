@@ -206,7 +206,7 @@
     methods: {
       checkUsername(rule, value) {
         return this.uniqueFieldSimpleValidation(
-          '/sys/user/checkUsername',
+          '/sys/user/check_user_name',
           value,
           {
             id: this.dataForm.id,
@@ -217,7 +217,7 @@
       },
       checkMobile(rule, value) {
         return this.uniqueFieldSimpleValidation(
-          '/sys/user/checkMobile',
+          '/sys/user/check_mobile',
           value,
           {
             id: this.dataForm.id,

@@ -1,7 +1,7 @@
 <template>
   <Dropdown :overlayClassName="`${prefixCls}-dropdown-overlay`" placement="bottomLeft">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getUserInfo.photo || headerImg" />
+      <img :class="`${prefixCls}__header`" :src="getUserInfo.photoUrl || headerImg" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
           {{ getUserInfo.name }}
@@ -11,13 +11,12 @@
 
     <template #overlay>
       <Menu @click="handleMenuClick">
-        <MenuItem
-          v-if="getShowDoc"
-          key="doc"
-          :text="t('layout.header.dropdownItemDoc')"
-          icon="ion:document-text-outline"
-        />
-        <MenuDivider v-if="getShowDoc" />
+        <MenuItem key="user" icon="carbon:user-favorite" text="个人中心" />
+        <!--
+                <MenuDivider v-if="getShowDoc" />
+        -->
+        <MenuDivider />
+
         <MenuItem
           key="lock"
           :text="t('layout.header.tooltipLock')"
@@ -32,12 +31,13 @@
     </template>
   </Dropdown>
   <LockAction @register="register" />
+  <UserCenterModal ref="userCenterModalRef" title="个人中心" />
 </template>
 <script lang="ts">
   // components
   import { Dropdown, Menu } from 'ant-design-vue';
 
-  import { computed, defineComponent } from 'vue';
+  import { computed, defineComponent, ref } from 'vue';
 
   import { DOC_URL } from '/@/settings/siteSetting';
 
@@ -53,7 +53,7 @@
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'doc' | 'user' | 'lock';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -63,6 +63,7 @@
       MenuItem: createAsyncComponent(() => import('./DropMenuItem.vue')),
       MenuDivider: Menu.Divider,
       LockAction: createAsyncComponent(() => import('../lock/LockModal.vue')),
+      UserCenterModal: createAsyncComponent(() => import('../user/UserCenterModal.vue')),
     },
     props: {
       theme: propTypes.oneOf(['dark', 'light']),
@@ -73,8 +74,8 @@
       const { getShowDoc } = useHeaderSetting();
 
       const getUserInfo = computed(() => {
-        const { name = '', desc, photo } = userStore.getUserInfoState || {};
-        return { name, desc, photo };
+        const { name = '', desc, photoUrl } = userStore.getUserInfoState || {};
+        return { name, desc, photoUrl };
       });
       const [register, { openModal }] = useModal();
 
@@ -92,6 +93,8 @@
         openWindow(DOC_URL);
       }
 
+      const userCenterModalRef = ref<any>(null);
+
       function handleMenuClick(e: { key: MenuEvent }) {
         switch (e.key) {
           case 'logout':
@@ -100,6 +103,9 @@
           case 'doc':
             openDoc();
             break;
+          case 'user':
+            userCenterModalRef.value.show();
+            break;
           case 'lock':
             handleLock();
             break;
@@ -107,6 +113,7 @@
       }
 
       return {
+        userCenterModalRef,
         prefixCls,
         t,
         getUserInfo,

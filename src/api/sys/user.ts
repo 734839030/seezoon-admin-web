@@ -5,9 +5,8 @@ import { UserResources } from '/@/api/sys/model/menuModel';
 enum Api {
   Login = '/login',
   Logout = '/logout',
-  GetUserInfo = '/sys/user/getInfo',
-  GetUserResources = '/sys/user/getResources',
-  GetPermCodeByUserId = '/getPermCodeByUserId',
+  GetUserInfo = '/sys/user/info',
+  GetUserResources = '/sys/user/get_resources',
 }
 
 /**

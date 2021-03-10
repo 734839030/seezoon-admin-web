@@ -39,9 +39,11 @@ export interface GetUserInfoModel {
   userId: string | number;
   // 用户名
   username: string;
+  deptName?: string;
   // 真实名字
   name: string;
   photo?: string;
+  photoUrl?: string;
   // 介绍
   desc?: string;
 }
