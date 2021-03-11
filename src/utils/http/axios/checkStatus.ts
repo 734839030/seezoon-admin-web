@@ -6,6 +6,7 @@ import { PageEnum } from '/@/enums/pageEnum';
 const { createMessage } = useMessage();
 
 const error = createMessage.error!;
+
 export function checkStatus(status: number, msg: string): void {
   const { t } = useI18n();
   switch (status) {

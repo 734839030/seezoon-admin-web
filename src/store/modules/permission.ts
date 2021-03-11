@@ -87,7 +87,15 @@ class Permission extends VuexModule {
   async buildRoutesAction(id?: number | string): Promise<AppRouteRecordRaw[]> {
     const { t } = useI18n();
     let routes: AppRouteRecordRaw[] = [];
-    const { roles, permissions, routes: backRoutes } = await getUserResources();
+    // const { roles, permissions, routes: backRoutes } = await getUserResources();
+    let userResources;
+    try {
+      userResources = await getUserResources();
+    } catch (e) {
+      console.error(e);
+      return routes;
+    }
+    const { roles, permissions, routes: backRoutes } = userResources;
     const roleList = roles as RoleEnum[];
     userStore.commitRoleListState(roleList);
     this.commitPermCodeListState(permissions);
