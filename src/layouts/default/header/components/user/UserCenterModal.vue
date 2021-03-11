@@ -9,7 +9,13 @@
     :width="750"
   >
     <a-tabs v-model:activeKey="activeKey" tabPosition="left">
-      <a-tab-pane key="info" tab="基本信息">
+      <a-tab-pane key="info">
+        <template #tab>
+          <span>
+            <icon icon="carbon:user-identification" />
+            基本信息
+          </span>
+        </template>
         <a-form
           ref="userInfoFormRef"
           :label-col="{ span: 7 }"
@@ -68,50 +74,57 @@
           </a-row>
         </a-form>
       </a-tab-pane>
-      <a-tab-pane key="password" force-render tab="修改密码">
+      <a-tab-pane key="password">
+        <template #tab>
+          <span>
+            <icon icon="vaadin:password" />
+            修改密码
+          </span>
+        </template>
         <a-alert banner closable message="密码修改成功后将重新回到登录页" show-icon />
-
-        <a-form
-          ref="userPasswordFormRef"
-          :label-col="{ span: 7 }"
-          :model="userPasswordForm"
-          :wrapper-col="{ span: 17 }"
-        >
-          <a-row>
-            <a-col :md="12" :xs="24">
-              <a-form-item :rules="passwordRules" label="原密码" name="oldPassword">
-                <a-input-password
-                  v-model:value="userPasswordForm.oldPassword"
-                  :maxlength="50"
-                  allow-clear
-                  autocomplete="new-password"
-                  placeholder="请输入密码"
-                />
-              </a-form-item>
-              <a-form-item :rules="passwordRules" label="新密码" name="newPassword">
-                <a-input-password
-                  v-model:value="userPasswordForm.newPassword"
-                  :maxlength="50"
-                  allow-clear
-                  autocomplete="new-password"
-                  placeholder="请确认新密码"
-                />
-              </a-form-item>
-              <a-form-item :rules="passwordRules" label="确认密码" name="confirmPassword">
-                <a-input-password
-                  v-model:value="userPasswordForm.confirmPassword"
-                  :maxlength="50"
-                  allow-clear
-                  autocomplete="new-password"
-                  placeholder="请确认密码"
-                />
-              </a-form-item>
-              <a-form-item :wrapper-col="{ span: 20, offset: 4 }">
-                <a-button type="primary" @click="handleModifyPassword">修改</a-button>
-              </a-form-item>
-            </a-col>
-          </a-row>
-        </a-form>
+        <div class="mt-4">
+          <a-form
+            ref="userPasswordFormRef"
+            :label-col="{ span: 7 }"
+            :model="userPasswordForm"
+            :wrapper-col="{ span: 17 }"
+          >
+            <a-row>
+              <a-col :md="12" :xs="24">
+                <a-form-item :rules="passwordRules" label="原密码" name="oldPassword">
+                  <a-input-password
+                    v-model:value="userPasswordForm.oldPassword"
+                    :maxlength="50"
+                    allow-clear
+                    autocomplete="new-password"
+                    placeholder="请输入密码"
+                  />
+                </a-form-item>
+                <a-form-item :rules="passwordRules" label="新密码" name="newPassword">
+                  <a-input-password
+                    v-model:value="userPasswordForm.newPassword"
+                    :maxlength="50"
+                    allow-clear
+                    autocomplete="new-password"
+                    placeholder="请确认新密码"
+                  />
+                </a-form-item>
+                <a-form-item :rules="passwordRules" label="确认密码" name="confirmPassword">
+                  <a-input-password
+                    v-model:value="userPasswordForm.confirmPassword"
+                    :maxlength="50"
+                    allow-clear
+                    autocomplete="new-password"
+                    placeholder="请确认密码"
+                  />
+                </a-form-item>
+                <a-form-item :wrapper-col="{ span: 20, offset: 4 }">
+                  <a-button type="primary" @click="handleModifyPassword">修改</a-button>
+                </a-form-item>
+              </a-col>
+            </a-row>
+          </a-form>
+        </div>
       </a-tab-pane>
     </a-tabs>
   </a-modal>
@@ -122,18 +135,17 @@
   import { defHttp } from '../../../../../utils/http/axios';
   import { userStore } from '../../../../../store/modules/user';
   import SUploader from '../../../../../components/SUploader/index.vue';
+  import { Icon } from '../../../../../components/Icon';
 
   export default {
     name: 'UserCenterModal',
-    components: { SUploader },
+    components: { SUploader, Icon },
     props: { title: String },
     setup() {
+      const activeKey = ref('');
       const visible = ref(false);
-      const show = function () {
-        visible.value = true;
-      };
-
-      let userInfoForm = reactive({});
+      const userInfoForm = reactive({});
+      const userPasswordForm = ref({});
       const init = async () => {
         const { userId, username, deptName, name, mobile, email, photo } = await getUserInfo();
         userInfoForm.userId = userId;
@@ -143,13 +155,19 @@
         userInfoForm.mobile = mobile;
         userInfoForm.email = email;
         userInfoForm.photo = photo;
+        userPasswordForm.value = {};
+        activeKey.value = 'info';
       };
       init();
+      const show = function () {
+        visible.value = true;
+        init();
+      };
       return {
-        userPasswordForm: reactive({}),
+        userPasswordForm,
         visible,
         show,
-        activeKey: ref('info'),
+        activeKey,
         userInfoForm,
       };
     },

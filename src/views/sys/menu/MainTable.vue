@@ -5,8 +5,8 @@
         <a-button v-auth="'sys:menu:query'" type="primary" @click="handleQuery()"> 查询</a-button>
         <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
         <a-button v-auth="'sys:menu:save'" type="default" @click="handleDataForm('添加')"
-          >添加</a-button
-        >
+          >添加
+        </a-button>
       </a-space>
     </a-form-item>
   </a-form>
@@ -21,7 +21,7 @@
     size="small"
   >
     <template #name="{ record }">
-      <g-icon v-if="record.icon" :icon="record.icon" />
+      <icon v-if="record.icon" :icon="record.icon" />
       {{ record.name }}
     </template>
     <template #type="{ text }">
@@ -58,11 +58,11 @@
   import DataFormModal from './DataFormModal.vue';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin';
   import { defHttp } from '../../../utils/http/axios';
-  import GIcon from '../../../components/Icon';
+  import { Icon } from '../../../components/Icon';
 
   export default {
     name: 'MainTable',
-    components: { DataFormModal, GIcon },
+    components: { DataFormModal, Icon },
     mixins: [queryTableMixin],
     data() {
       return {
