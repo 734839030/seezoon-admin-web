@@ -14,7 +14,11 @@
       <a-input v-model:value="searchForm.relativePath" :maxlength="100" placeholder="相对路径" />
     </a-form-item>
     <a-form-item label="上传日期" name="createDateRange">
-      <a-range-picker v-model:value="searchForm.createDateRange" :allowClear="false" />
+      <a-range-picker
+        v-model:value="searchForm.createDateRange"
+        :allowClear="false"
+        valueFormat="YYYY-MM-DD"
+      />
     </a-form-item>
     <a-form-item>
       <a-space>
@@ -75,10 +79,7 @@
     data() {
       return {
         searchForm: {
-          createDateRange: [
-            moment().subtract(7, 'days').format('YYYY-MM-DD'),
-            moment().format('YYYY-MM-DD'),
-          ],
+          createDateRange: [moment().day(-7).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')],
         },
         url: '/sys/file/query',
         columns: [
