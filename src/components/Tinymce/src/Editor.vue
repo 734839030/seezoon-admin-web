@@ -1,11 +1,6 @@
 <template>
   <div :class="prefixCls" :style="{ width: containerWidth }">
-    <ImgUpload
-      @uploading="handleImageUploading"
-      @done="handleDone"
-      v-if="showImageUpload"
-      v-show="editorRef"
-    />
+    <ImgUpload @uploading="handleImageUploading" @done="handleDone" v-show="editorRef" />
     <textarea :id="tinymceId" ref="elRef" :style="{ visibility: 'hidden' }"></textarea>
   </div>
 </template>

@@ -7,6 +7,7 @@
     :multiple="multiple"
     action="/sys/file/upload"
     name="file"
+    :disabled="disabled"
     @change="handleChange"
   >
     <div v-if="fileList.length < limit">
@@ -43,6 +44,10 @@
       // 相对路径多个逗号分隔
       value: {
         type: String,
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       },
     },
     emits: ['update:value'],

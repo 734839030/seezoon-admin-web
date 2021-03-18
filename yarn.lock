@@ -1727,6 +1727,11 @@
     ejs "^2.6.1"
     magic-string "^0.25.0"
 
+"@tinymce/tinymce-vue@^4":
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/@tinymce/tinymce-vue/download/@tinymce/tinymce-vue-4.0.0.tgz#694e214f071370dfad1ac199056373048578e6ee"
+  integrity sha1-aU4hTwcTcN+tGsGZBWNzBIV45u4=
+
 "@trysound/sax@0.1.1":
   version "0.1.1"
   resolved "https://registry.npmjs.org/@trysound/sax/-/sax-0.1.1.tgz#3348564048e7a2d7398c935d466c0414ebb6a669"

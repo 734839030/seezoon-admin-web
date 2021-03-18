@@ -52,7 +52,7 @@
     <template #action="{ record }">
       <a v-auth="'sys:file:query'" @click="preview(record.url)">预览</a>
       <a-divider type="vertical" />
-      <a v-auth="'sys:file:down'" @click="download(record.id)">下载</a>
+      <a v-auth="'sys:file:download'" @click="download(record.id)">下载</a>
       <a-divider type="vertical" />
       <a-popconfirm
         placement="left"
