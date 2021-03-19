@@ -123,6 +123,7 @@
           <a-form-item
             label="图片"
             name="image"
+            :autoLink="false"
             :rules="[{ required: true, message: '图片不能为空', whitespace: true }]"
           >
             <s-uploader v-model:value="dataForm.image" accept="image/*" listType="picture-card" />
@@ -134,6 +135,7 @@
           <a-form-item
             label="文件"
             name="file"
+            :autoLink="false"
             :rules="[{ required: true, message: '文件不能为空', whitespace: true }]"
           >
             <s-uploader v-model:value="dataForm.file" listType="text" />
