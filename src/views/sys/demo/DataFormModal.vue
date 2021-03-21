@@ -164,13 +164,13 @@
     methods: {
       checkParamKey(rule, value) {
         return this.uniqueFieldSimpleValidation(
-          '/sys/demo/check_param_key',
+          '/sys/demo/check_input_text',
           value,
           {
             id: this.dataForm.id,
-            paramKey: value,
+            inputText: value,
           },
-          `唯一键 ${value} 已存在`
+          `${value} 已存在`
         );
       },
       // 保存后回调

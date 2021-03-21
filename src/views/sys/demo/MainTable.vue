@@ -62,6 +62,9 @@
     size="small"
     @change="handleTableChange"
   >
+    <template #view="{ record, text }">
+      <a @click="this.$refs.dataViewModal.show(record.id)">{{ text ? text : '查看' }}</a>
+    </template>
     <template #action="{ record }">
       <a v-auth="'sys:demo:update'" @click="handleDataForm('编辑', record.id)">编辑</a>
       <a-divider type="vertical" />
@@ -80,9 +83,11 @@
     :title="dataFormModal.title"
     @refreshQuery="handleQuery"
   />
+  <data-view ref="dataViewModal" />
 </template>
 <script>
   import DataFormModal from './DataFormModal.vue';
+  import DataView from './DataViewModal.vue';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin';
   import { defHttp } from '../../../utils/http/axios';
   import {
@@ -96,7 +101,7 @@
 
   export default {
     name: 'MainTable',
-    components: { DataFormModal },
+    components: { DataFormModal, DataView },
     mixins: [queryTableMixin],
     setup() {
       return { inputSelectDicts, inputRadioDicts, inputCheckboxDicts };
@@ -113,6 +118,7 @@
             dataIndex: 'inputText',
             fixed: 'left',
             ellipsis: true,
+            slots: { customRender: 'view' },
           },
           {
             title: '下拉',
