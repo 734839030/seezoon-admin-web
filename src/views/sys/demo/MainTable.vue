@@ -116,8 +116,6 @@
           {
             title: '文本',
             dataIndex: 'inputText',
-            fixed: 'left',
-            ellipsis: true,
             slots: { customRender: 'view' },
           },
           {

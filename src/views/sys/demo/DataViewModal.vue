@@ -1,5 +1,12 @@
 <template>
-  <a-modal v-model:visible="visible" :destroyOnClose="true" :height="600" title="查看" :width="750">
+  <a-modal
+    v-model:visible="visible"
+    :destroyOnClose="true"
+    :height="600"
+    title="查看"
+    :width="750"
+    :footer="null"
+  >
     <a-descriptions bordered size="small">
       <a-descriptions-item label="文本">{{ data.inputText }}</a-descriptions-item>
       <a-descriptions-item label="下拉">
