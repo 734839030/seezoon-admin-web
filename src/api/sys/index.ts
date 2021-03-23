@@ -1,5 +1,9 @@
 import { defHttp } from '/@/utils/http/axios';
 import { Dict } from '/@/api/sys/model/dictModel';
+import { ref } from 'vue';
+import { message } from 'ant-design-vue';
+import { Persistent } from '/@/utils/cache/persistent';
+import { DICT_KEY } from '/@/enums/cacheEnum';
 
 /**
  * 部门树
@@ -30,6 +34,47 @@ export async function getTypes() {
     dictTypes.push({ label: type, value: type });
   }
   return dictTypes;
+}
+
+/**
+ * 获取指定字典数据
+ */
+export function getDict(type: string) {
+  const dicts = ref([]);
+  defHttp.get({ url: '/sys/dict/query_by_type', params: { type: type } }).then((data) => {
+    dicts.value = data;
+  });
+  return dicts;
+}
+
+export function getAllDict() {
+  const dictSession = Persistent.getSession(DICT_KEY);
+  if (null != dictSession) {
+    debugger;
+    return dictSession;
+  }
+  defHttp
+    .get({ url: '/sys/dict/query_by_type' })
+    .then((data) => {
+      const dictMap = new Map<string, Dict[]>();
+      for (const dict of data.values()) {
+        const type = dict.type;
+        if (dictMap.has(type)) {
+          dictMap
+            .get(type)
+            ?.push({ label: dict.name, value: dict.value, disabled: type.status === 0 });
+        } else {
+          dictMap.set(dict.type, [
+            { label: dict.name, value: dict.value, disabled: type.status === 0 },
+          ]);
+        }
+      }
+      debugger;
+      Persistent.setSession(DICT_KEY, dictMap);
+    })
+    .catch((e) => {
+      message.error('字典加载失败请刷新网页:' + e);
+    });
 }
 
 /**

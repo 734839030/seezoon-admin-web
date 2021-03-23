@@ -12,9 +12,11 @@ import {
   PROJ_CFG_KEY,
   APP_LOCAL_CACHE_KEY,
   APP_SESSION_CACHE_KEY,
+  DICT_KEY,
 } from '/@/enums/cacheEnum';
 import { DEFAULT_CACHE_TIME } from '/@/settings/encryptionSetting';
 import { toRaw } from 'vue';
+import { Dict } from '/@/api/sys/model/dictModel';
 
 interface BasicStore {
   [TOKEN_KEY]: string | number | null | undefined;
@@ -22,6 +24,7 @@ interface BasicStore {
   [ROLES_KEY]: string[];
   [LOCK_INFO_KEY]: LockInfo;
   [PROJ_CFG_KEY]: ProjectConfig;
+  [DICT_KEY]: Map<string, Dict[]>;
 }
 
 type LocalStore = BasicStore;

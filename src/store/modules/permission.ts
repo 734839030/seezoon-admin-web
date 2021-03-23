@@ -94,8 +94,10 @@ class Permission extends VuexModule {
     let routes: AppRouteRecordRaw[] = [];
     // const { roles, permissions, routes: backRoutes } = await getUserResources();
     let userResources;
+    debugger;
     try {
       userResources = await getUserResources();
+      //  getAllDict();
     } catch (e) {
       console.error(e);
       return routes;

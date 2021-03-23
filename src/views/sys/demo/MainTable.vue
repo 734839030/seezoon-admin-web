@@ -22,6 +22,9 @@
     <a-form-item label="单选" name="inputRadio">
       <a-radio-group :options="inputRadioDicts" v-model:value="searchForm.inputRadio" />
     </a-form-item>
+    <a-form-item label="状态" name="status">
+      <a-radio-group :options="status" v-model:value="searchForm.status" />
+    </a-form-item>
     <a-form-item label="多选" name="inputCheckbox">
       <a-checkbox-group
         v-model:value="searchForm.inputCheckboxTODO"
@@ -98,13 +101,15 @@
     inputSelectDictsMap,
   } from './data';
   import moment from 'moment';
+  import { getDict } from '../../../api/sys';
 
   export default {
     name: 'MainTable',
     components: { DataFormModal, DataView },
     mixins: [queryTableMixin],
     setup() {
-      return { inputSelectDicts, inputRadioDicts, inputCheckboxDicts };
+      const status = getDict('status');
+      return { inputSelectDicts, inputRadioDicts, inputCheckboxDicts, status };
     },
     data() {
       return {
