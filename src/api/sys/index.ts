@@ -37,9 +37,9 @@ export async function getTypes() {
 }
 
 /**
- * 获取指定字典数据
+ * 获取指定字典数据,作废
  */
-export function getDict(type: string) {
+export function getDictRomote(type: string) {
   const dicts = ref([]);
   defHttp.get({ url: '/sys/dict/query_by_type', params: { type: type } }).then((data) => {
     dicts.value = data;
@@ -47,34 +47,59 @@ export function getDict(type: string) {
   return dicts;
 }
 
-export function getAllDict() {
-  const dictSession = Persistent.getSession(DICT_KEY);
-  if (null != dictSession) {
-    debugger;
-    return dictSession;
-  }
-  defHttp
-    .get({ url: '/sys/dict/query_by_type' })
-    .then((data) => {
-      const dictMap = new Map<string, Dict[]>();
-      for (const dict of data.values()) {
-        const type = dict.type;
-        if (dictMap.has(type)) {
-          dictMap
-            .get(type)
-            ?.push({ label: dict.name, value: dict.value, disabled: type.status === 0 });
-        } else {
-          dictMap.set(dict.type, [
-            { label: dict.name, value: dict.value, disabled: type.status === 0 },
-          ]);
-        }
-      }
-      debugger;
-      Persistent.setSession(DICT_KEY, dictMap);
-    })
-    .catch((e) => {
-      message.error('字典加载失败请刷新网页:' + e);
+const dicts = <Map<string, Dict[]>>getDictAll();
+
+/**
+ * 在表单回显的时候会区分类型
+ * @param type
+ * @param number 是否数值
+ */
+export function getDict(type: string, number = false): Dict[] {
+  const dictArray = dicts.get(type) || [];
+  // 转数值类字段
+  if (number) {
+    dictArray.forEach((dict) => {
+      dict.value = parseInt(dict.value);
     });
+  }
+  return dictArray;
+}
+
+export function getDictAll() {
+  const dictMap = new Map<string, Dict[]>();
+  const dictSession = Persistent.getSession<Dict[]>(DICT_KEY) || [];
+
+  for (const dict of dictSession.values()) {
+    const type = <string>dict.type;
+    if (dictMap.has(type)) {
+      dictMap.get(type)?.push({ label: dict.label, value: dict.value, disabled: dict.disabled });
+    } else {
+      dictMap.set(type, [{ label: dict.label, value: dict.value, disabled: dict.disabled }]);
+    }
+  }
+
+  return dictMap;
+}
+
+/**
+ * 加载全量字典
+ */
+export async function initAllDict() {
+  try {
+    const data = await defHttp.get({ url: '/sys/dict/query_by_type' });
+    const dicts = <Dict[]>[];
+    for (const dict of data.values()) {
+      dicts.push({
+        label: dict.name,
+        value: dict.code,
+        type: dict.type,
+        disabled: dict.status === 0,
+      });
+    }
+    Persistent.setSession(DICT_KEY, dicts, true);
+  } catch (e) {
+    message.error('字典加载失败请刷新网页:' + e);
+  }
 }
 
 /**

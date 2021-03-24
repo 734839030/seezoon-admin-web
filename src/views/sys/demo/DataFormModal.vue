@@ -20,7 +20,10 @@
       <a-row>
         <a-col :md="12" :xs="24">
           <a-form-item
-            :rules="[{ required: true, message: '文本不能为空', whitespace: true }]"
+            :rules="[
+              { required: true, message: '文本不能为空', whitespace: true },
+              { validator: checkInputText, trigger: 'blur' },
+            ]"
             label="文本"
             name="inputText"
           >
@@ -152,6 +155,7 @@
   import { inputSelectDicts, inputRadioDicts, inputCheckboxDicts } from './data';
   import { Tinymce } from '../../../components/Tinymce/index';
   import SUploader from '../../../components/SUploader/index.vue';
+  import { defHttp } from '../../../utils/http/axios';
 
   export default {
     name: 'DataFormModal',
@@ -162,7 +166,18 @@
       return { inputSelectDicts, inputRadioDicts, inputCheckboxDicts };
     },
     methods: {
-      checkParamKey(rule, value) {
+      open(title, id) {
+        this.visible = true;
+        this.title = title;
+        if (null != id) {
+          defHttp.get({ url: '/sys/demo/query/' + id }).then((data) => {
+            this.dataForm = data;
+          });
+        } else {
+          this.dataForm = { sort: 1000 };
+        }
+      },
+      checkInputText(rule, value) {
         return this.uniqueFieldSimpleValidation(
           '/sys/demo/check_input_text',
           value,

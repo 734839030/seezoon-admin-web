@@ -23,7 +23,7 @@
       <a-radio-group :options="inputRadioDicts" v-model:value="searchForm.inputRadio" />
     </a-form-item>
     <a-form-item label="状态" name="status">
-      <a-radio-group :options="status" v-model:value="searchForm.status" />
+      <a-radio-group :options="statusDicts" v-model:value="searchForm.status" />
     </a-form-item>
     <a-form-item label="多选" name="inputCheckbox">
       <a-checkbox-group
@@ -48,7 +48,10 @@
       <a-space>
         <a-button v-auth="'sys:demo:query'" type="primary" @click="handleQuery()">查询</a-button>
         <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
-        <a-button v-auth="'sys:demo:save'" type="default" @click="handleDataForm('添加')"
+        <a-button
+          v-auth="'sys:demo:save'"
+          type="default"
+          @click="this.$refs.dataFormModal.open('添加')"
           >添加
         </a-button>
       </a-space>
@@ -66,10 +69,12 @@
     @change="handleTableChange"
   >
     <template #view="{ record, text }">
-      <a @click="this.$refs.dataViewModal.show(record.id)">{{ text ? text : '查看' }}</a>
+      <a @click="this.$refs.dataViewModal.open(record.id)">{{ text ? text : '查看' }}</a>
     </template>
     <template #action="{ record }">
-      <a v-auth="'sys:demo:update'" @click="handleDataForm('编辑', record.id)">编辑</a>
+      <a v-auth="'sys:demo:update'" @click="this.$refs.dataFormModal.open('编辑', record.id)"
+        >编辑</a
+      >
       <a-divider type="vertical" />
       <a-popconfirm
         placement="left"
@@ -80,36 +85,29 @@
       </a-popconfirm>
     </template>
   </a-table>
-  <data-form-modal
-    ref="dataFormModal"
-    :data-form="dataFormModal.dataForm"
-    :title="dataFormModal.title"
-    @refreshQuery="handleQuery"
-  />
+  <data-form-modal ref="dataFormModal" @refreshQuery="handleQuery" />
   <data-view ref="dataViewModal" />
 </template>
 <script>
   import DataFormModal from './DataFormModal.vue';
   import DataView from './DataViewModal.vue';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin';
-  import { defHttp } from '../../../utils/http/axios';
   import {
     inputCheckboxDicts,
     inputRadioDicts,
     inputRadioDictsMap,
     inputSelectDicts,
     inputSelectDictsMap,
+    statusDicts,
   } from './data';
   import moment from 'moment';
-  import { getDict } from '../../../api/sys';
 
   export default {
     name: 'MainTable',
     components: { DataFormModal, DataView },
     mixins: [queryTableMixin],
     setup() {
-      const status = getDict('status');
-      return { inputSelectDicts, inputRadioDicts, inputCheckboxDicts, status };
+      return { inputSelectDicts, inputRadioDicts, inputCheckboxDicts, statusDicts };
     },
     data() {
       return {
@@ -177,24 +175,10 @@
             slots: { customRender: 'action' },
           },
         ],
-        dataFormModal: {},
       };
     },
     mounted() {
       this.handleQuery();
-    },
-    methods: {
-      handleDataForm(title, id) {
-        if (id) {
-          defHttp.get({ url: '/sys/demo/query/' + id }).then((data) => {
-            this.$refs.dataFormModal.show();
-            this.dataFormModal = { title: title, dataForm: data };
-          });
-        } else {
-          this.$refs.dataFormModal.show();
-          this.dataFormModal = { title: title, dataForm: { sort: 1000 } };
-        }
-      },
     },
   };
 </script>

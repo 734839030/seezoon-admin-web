@@ -31,7 +31,10 @@
       <a-space>
         <a-button v-auth="'sys:user:query'" type="primary" @click="handleQuery()">查询</a-button>
         <a-button type="default" @click="this.$refs.searchForm.resetFields()">重置</a-button>
-        <a-button v-auth="'sys:user:save'" type="default" @click="handleDataForm('添加')"
+        <a-button
+          v-auth="'sys:user:save'"
+          type="default"
+          @click="this.$refs.dataFormModal.open('添加')"
           >添加
         </a-button>
       </a-space>
@@ -64,7 +67,9 @@
           </a-tag>
         </template>
         <template #action="{ record }">
-          <a v-auth="'sys:user:update'" @click="handleDataForm('编辑', record.id)">编辑</a>
+          <a v-auth="'sys:user:update'" @click="this.$refs.dataFormModal.open('编辑', record.id)"
+            >编辑</a
+          >
           <a-divider type="vertical" />
           <a-popconfirm
             placement="left"
@@ -77,18 +82,12 @@
       </a-table>
     </a-col>
   </a-row>
-  <data-form-modal
-    ref="dataFormModal"
-    :data-form="dataFormModal.dataForm"
-    :title="dataFormModal.title"
-    @refreshQuery="handleQuery"
-  />
+  <data-form-modal ref="dataFormModal" @refreshQuery="handleQuery" />
 </template>
 <script>
   import DataFormModal from './DataFormModal.vue';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin';
   import { deptTreeSelectMixin } from '../../../mixins/sys/dept-tree-select-mixin';
-  import { defHttp } from '../../../utils/http/axios';
 
   export default {
     name: 'MainTable',
@@ -152,24 +151,12 @@
             slots: { customRender: 'action' },
           },
         ],
-        dataFormModal: {},
       };
     },
     mounted() {
       this.handleQuery();
     },
     methods: {
-      handleDataForm(title, id) {
-        if (id) {
-          defHttp.get({ url: '/sys/user/query/' + id }).then((data) => {
-            this.$refs.dataFormModal.show();
-            this.dataFormModal = { title: title, dataForm: data };
-          });
-        } else {
-          this.$refs.dataFormModal.show();
-          this.dataFormModal = { title: title, dataForm: { status: 1 } };
-        }
-      },
       onDeptTreeSelect(selectedKeys, { node }) {
         this.searchForm.deptId = node.selected ? undefined : node.dataRef.value;
         this.handleQuery();

@@ -24,7 +24,7 @@ interface BasicStore {
   [ROLES_KEY]: string[];
   [LOCK_INFO_KEY]: LockInfo;
   [PROJ_CFG_KEY]: ProjectConfig;
-  [DICT_KEY]: Map<string, Dict[]>;
+  [DICT_KEY]: Dict[];
 }
 
 type LocalStore = BasicStore;
@@ -72,7 +72,7 @@ export class Persistent {
 
   static setSession(key: SessionKeys, value: SessionStore[SessionKeys], immediate = false): void {
     sessionMemory.set(key, toRaw(value));
-    immediate && ss.set(APP_SESSION_CACHE_KEY, sessionMemory);
+    immediate && ss.set(APP_SESSION_CACHE_KEY, sessionMemory.getCache);
   }
 
   static removeSession(key: SessionKeys): void {
