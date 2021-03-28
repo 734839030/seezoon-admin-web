@@ -25,8 +25,6 @@ import '/@/router/guard';
 // Register icon Sprite
 import 'vite-plugin-svg-icons/register';
 
-import { isDevMode } from '/@/utils/env';
-
 (async () => {
   // @ts-ignore
   const app = createApp(App);
@@ -49,13 +47,8 @@ import { isDevMode } from '/@/utils/env';
   setupErrorHandle(app);
 
   // Mount when the route is ready
+  // https://next.router.vuejs.org/api/#isready
   await router.isReady();
 
   app.mount('#app', true);
-
-  // The development environment takes effect
-  if (isDevMode()) {
-    // app.config.performance = true;
-    window.__APP__ = app;
-  }
 })();
