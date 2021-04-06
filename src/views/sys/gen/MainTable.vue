@@ -2,16 +2,17 @@
   <!-- 查询表单 -->
   <a-form
     ref="searchForm"
-    :labelCol="this.labelCol"
+    :labelCol="{ span: 6 }"
     :model="searchForm"
-    :wrapperCol="this.wrapperCol"
+    :wrapperCol="{ span: 18 }"
     layout="inline"
   >
     <a-form-item label="表名" name="tableName">
       <a-select
         v-model:value="searchForm.tableName"
-        style="width: 125px"
+        style="width: 140px"
         :allowClear="true"
+        :showSearch="true"
         :options="tables"
         placeholder="请选择表"
       />
@@ -23,7 +24,7 @@
         <a-button
           v-auth="'sys:gen:save'"
           type="default"
-          @click="this.$refs.dataFormModal.open('添加')"
+          @click="this.$refs.dataFormModal.gen('生成', searchForm.tableName)"
           >添加
         </a-button>
       </a-space>
@@ -41,29 +42,29 @@
     @change="handleTableChange"
   >
     <template #action="{ record }">
-      <a v-auth="'sys:gen:update'" @click="this.$refs.dataFormModal.open('编辑', record.id)"
+      <a v-auth="'sys:gen:update'" @click="this.$refs.dataFormModal.edit('编辑', record.id)"
         >编辑</a
       >
       <a-divider type="vertical" />
       <a-popconfirm
         placement="left"
         title="确定删除？"
-        @confirm="handleDelete('/sys/demo/delete', record.id)"
+        @confirm="handleDelete('/sys/gen/delete', record.id)"
       >
         <a v-auth="'sys:gen:delete'">删除</a>
       </a-popconfirm>
     </template>
   </a-table>
-  <!-- <data-form-modal ref="dataFormModal" @refreshQuery="handleQuery" /> -->
+  <data-form-modal ref="dataFormModal" @refreshQuery="handleQuery" />
 </template>
 <script>
-  // import DataFormModal from './DataFormModal.vue';
-  import { queryTableMixin } from '../../../mixins/common/query-table-mixin';
-  import { getTables } from './data';
+  import DataFormModal from './DataFormModal.vue';
+  import { queryTableMixin } from '../../../mixins/common/query-table-mixin.js';
+  import { getTables, templateTypesMap } from './data';
 
   export default {
     name: 'MainTable',
-    // components: { DataFormModal },
+    components: { DataFormModal },
     mixins: [queryTableMixin],
     setup() {
       const tables = getTables();
@@ -74,50 +75,27 @@
         url: '/sys/gen/query',
         columns: [
           {
-            title: '文本',
-            dataIndex: 'inputText',
+            title: '表名',
+            dataIndex: 'tableName',
           },
           {
-            title: '下拉',
-            dataIndex: 'inputSelect',
-            ellipsis: true,
+            title: '菜单名',
+            dataIndex: 'menuName',
+          },
+          {
+            title: '模块名',
+            dataIndex: 'moduleName',
+          },
+          {
+            title: '类名',
+            dataIndex: 'className',
+          },
+          {
+            title: '模板',
+            dataIndex: 'template',
             customRender: function ({ text }) {
-              return inputSelectDictsMap.get(text);
+              return templateTypesMap.get(text);
             },
-          },
-          {
-            title: '单选',
-            dataIndex: 'inputRadio',
-            ellipsis: true,
-            customRender: function ({ text }) {
-              return inputRadioDictsMap.get(text);
-            },
-          },
-          {
-            title: '文本域',
-            dataIndex: 'inputTextarea',
-            ellipsis: true,
-          },
-          {
-            title: '日期',
-            dataIndex: 'inputDate',
-            ellipsis: true,
-          },
-          {
-            title: '整数',
-            dataIndex: 'inputZhengshu',
-            ellipsis: true,
-          },
-          {
-            title: '小数',
-            dataIndex: 'inputXiaoshu',
-            ellipsis: true,
-          },
-          {
-            title: '创建时间',
-            dataIndex: 'createTime',
-            ellipsis: true,
-            sorter: true,
           },
           {
             title: '修改时间',
@@ -134,6 +112,7 @@
       };
     },
     mounted() {
+      this.$refs.dataFormModal.gen('生成', 'sys_login_log');
       this.handleQuery();
     },
   };

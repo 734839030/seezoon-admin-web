@@ -60,7 +60,6 @@
 </template>
 <script>
   import DataFormModal from './DataFormModal.vue';
-  import { defHttp } from '../../../utils/http/axios';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin.js';
 
   export default {

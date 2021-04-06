@@ -1,0 +1,352 @@
+<template>
+  <a-drawer
+    v-model:visible="visible"
+    :destroyOnClose="true"
+    :height="this.height"
+    :maskClosable="false"
+    :title="title"
+    :width="1200"
+  >
+    <a-form
+      ref="dataForm"
+      :label-col="this.labelCol"
+      :model="dataForm"
+      :wrapper-col="this.wrapperCol"
+    >
+      <a-input v-model:value="dataForm.id" type="hidden" />
+      <a-row>
+        <a-col :md="8">
+          <a-form-item
+            :rules="[{ required: true, message: '表不能为空', whitespace: true }]"
+            label="表名"
+            name="tableName"
+          >
+            <a-input v-model:value="dataForm.tableName" :disabled="true" />
+          </a-form-item>
+        </a-col>
+        <a-col :md="8">
+          <a-form-item
+            :rules="[{ required: true, message: '菜单名不能为空', whitespace: true }]"
+            label="菜单名"
+            name="menuName"
+          >
+            <a-input v-model:value="dataForm.menuName" :maxlength="50" />
+          </a-form-item>
+        </a-col>
+        <a-col :md="8">
+          <a-form-item
+            :rules="[{ required: true, message: '模块名不能为空', whitespace: true }]"
+            label="模块名"
+            name="moduleName"
+          >
+            <a-input
+              v-model:value="dataForm.moduleName"
+              :maxlength="10"
+              placeholder="英文名如sys"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :md="8">
+          <a-form-item
+            :rules="[{ required: true, message: '功能名不能为空', whitespace: true }]"
+            label="功能名"
+            name="functionName"
+          >
+            <a-input
+              v-model:value="dataForm.functionName"
+              :maxlength="20"
+              placeholder="英文名如demo"
+            />
+          </a-form-item>
+        </a-col>
+        <a-col :md="8">
+          <a-form-item
+            :rules="[{ required: true, message: '类名不能为空', whitespace: true }]"
+            label="类名"
+            name="className"
+          >
+            <a-input
+              v-model:value="dataForm.className"
+              :maxlength="50"
+              placeholder="英文名如SysDemo"
+            />
+          </a-form-item>
+        </a-col>
+        <a-col :md="8">
+          <a-form-item
+            :rules="[{ required: true, message: '模板不能为空', whitespace: true }]"
+            label="生成模板"
+            name="templateType"
+          >
+            <a-select
+              v-model:value="dataForm.templateType"
+              style="width: 200px"
+              :allowClear="true"
+              :options="templateTypes"
+              placeholder="请选择下拉数据"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+    </a-form>
+    <a-form
+      ref="dataForm"
+      :label-col="this.labelCol"
+      :model="tableDataSource"
+      :wrapper-col="this.wrapperCol"
+    >
+      <a-table
+        :columns="columns"
+        :data-source="tableDataSource"
+        :row-key="(record) => record.dbColumnName"
+        bordered
+        :pagination="false"
+        :scroll="{ y: 500, x: 1200 }"
+        class="mt-4"
+      >
+        <template #fieldNameTitle>
+          <a-typography-text type="danger">*</a-typography-text>字段名</template
+        >
+        <template #javaFieldNameTitle>
+          <a-typography-text type="danger">*</a-typography-text>Java字段名</template
+        >
+        <template #fieldName="{ index }">
+          <a-input
+            :style="{ border: tableDataSource[index].fieldName ? '' : '1px solid red' }"
+            v-model:value="tableDataSource[index].fieldName"
+            :maxlength="6"
+            placeholder="最长6"
+          />
+        </template>
+        <template #javaFieldName="{ index }">
+          <a-input
+            :style="{ border: tableDataSource[index].javaFieldName ? '' : '1px solid red' }"
+            v-model:value="tableDataSource[index].javaFieldName"
+            :maxlength="20"
+          />
+        </template>
+        <template #nullable|insert|update="{ index }">
+          <a-divider type="vertical" :dashed="true" />
+          <a-checkbox v-model:checked="tableDataSource[index].nullable" />
+          <a-divider type="vertical" />
+          <a-checkbox v-model:checked="tableDataSource[index].insert" />
+          <a-divider type="vertical" />
+          <a-checkbox v-model:checked="tableDataSource[index].update" />
+        </template>
+        <template #list|sortable="{ index }">
+          <a-divider type="vertical" :dashed="true" />
+          <a-checkbox v-model:checked="tableDataSource[index].list" />
+          <a-divider type="vertical" />
+          <a-checkbox v-model:checked="tableDataSource[index].sortable" />
+        </template>
+        <template #search="{ index }">
+          <a-checkbox v-model:checked="tableDataSource[index].search" />
+        </template>
+        <template #queryType="{ index }">
+          <a-select
+            v-model:value="tableDataSource[index].queryType"
+            :allowClear="true"
+            style="width: 100px"
+            :options="queryTypeDicts"
+          />
+        </template>
+        <template #inputType="{ index }">
+          <a-select
+            v-model:value="tableDataSource[index].inputType"
+            :allowClear="true"
+            style="width: 90px"
+            :options="inputTypeDicts"
+          />
+        </template>
+        <template #dictType="{ index }">
+          <a-select
+            v-model:value="tableDataSource[index].dictType"
+            :allowClear="true"
+            style="width: 100px"
+            :options="dictTypes"
+            show-search
+          />
+        </template>
+        <template #sort="{ index }">
+          <a-input-number
+            :style="{ border: tableDataSource[index].sort != null ? '' : '1px solid red' }"
+            v-model:value="tableDataSource[index].sort"
+            :maxlength="20"
+            :step="10"
+            placeholder="升序"
+          />
+        </template>
+      </a-table>
+    </a-form>
+    <br />
+    <div
+      :style="{
+        position: 'absolute',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        borderTop: '1px solid #e9e9e9',
+        padding: '10px 16px',
+        background: '#fff',
+        textAlign: 'left',
+        zIndex: 1,
+      }"
+    >
+      <a-button style="margin-right: 8px" @click="this.visible = false">取消</a-button>
+      <a-button
+        type="primary"
+        @click="
+          handleOk(
+            this.dataForm.id === undefined ? '/sys/gen/save' : '/sys/gen/update/' + this.dataForm.id
+          )
+        "
+        >保存</a-button
+      >
+    </div>
+  </a-drawer>
+</template>
+
+<script>
+  import { dataFormModalMixin } from '../../../mixins/common/data-form-mixin-modal.js';
+  import { defHttp } from '../../../utils/http/axios';
+  import { templateTypes, queryTypeDicts, inputTypeDicts } from './data';
+  import { onMounted, ref } from 'vue';
+  import { getTypes } from '../../../api/sys';
+
+  export default {
+    name: 'DataFormModal',
+    mixins: [dataFormModalMixin],
+    emits: ['refreshQuery'],
+    setup() {
+      let dictTypes = ref([]);
+      onMounted(async () => {
+        dictTypes.value = await getTypes();
+      });
+      return { templateTypes, queryTypeDicts, inputTypeDicts, dictTypes };
+    },
+    data() {
+      return {
+        columns: [
+          {
+            title: '列名',
+            dataIndex: 'dbColumnName',
+            width: 100,
+            ellipsis: true,
+            fixed: 'left',
+          },
+          {
+            // title:'字段名',
+            dataIndex: 'fieldName',
+            slots: { customRender: 'fieldName', title: 'fieldNameTitle' },
+            width: 150,
+            fixed: 'left',
+          },
+          {
+            title: 'DB类型',
+            dataIndex: 'columnType',
+            width: 130,
+            ellipsis: true,
+          },
+          {
+            title: 'Java类型',
+            dataIndex: 'javaType',
+            width: 100,
+            ellipsis: true,
+          },
+          {
+            //title: 'Java字段名称',
+            dataIndex: 'javaFieldName',
+            slots: { customRender: 'javaFieldName', title: 'javaFieldNameTitle' },
+            width: 150,
+          },
+          {
+            title: '可空 | 插入 | 更新',
+            dataIndex: 'nullable|insert|update',
+            width: 145,
+            slots: { customRender: 'nullable|insert|update' },
+          },
+          {
+            title: '列表 | 排序',
+            dataIndex: 'list|sortable',
+            width: 105,
+            slots: { customRender: 'list|sortable' },
+          },
+          {
+            title: '查询',
+            dataIndex: 'search',
+            width: 65,
+            slots: { customRender: 'search' },
+          },
+          {
+            title: '查询方式',
+            dataIndex: 'queryType',
+            width: 130,
+            slots: { customRender: 'queryType' },
+          },
+          {
+            title: '表单类型',
+            dataIndex: 'inputType',
+            width: 150,
+            slots: { customRender: 'inputType' },
+          },
+          {
+            title: '字典',
+            dataIndex: 'dictType',
+            width: 150,
+            slots: { customRender: 'dictType' },
+          },
+          {
+            title: '顺序',
+            dataIndex: 'sort',
+            width: 130,
+            slots: { customRender: 'sort' },
+          },
+        ],
+        tableDataSource: [],
+      };
+    },
+    methods: {
+      edit(title, id) {
+        this.visible = true;
+        this.title = title;
+        defHttp.get({ url: '/sys/gen/query/' + id }).then((data) => {
+          this.dataForm = data;
+          this.tableDataSource = data.columnPlans;
+        });
+      },
+      gen(title, tableName) {
+        if (!tableName) {
+          this.$message.warning('请选择数据库表');
+          return false;
+        }
+        this.visible = true;
+        this.title = title;
+        defHttp.get({ url: '/sys/gen/query', params: { tableName: tableName } }).then((data) => {
+          this.dataForm = data;
+          this.tableDataSource = data.columnPlans;
+        });
+      },
+      // 保存后回调
+      handleOkCb() {
+        this.$emit('refreshQuery');
+      },
+      handleOk(url) {
+        // check
+        this.tableDataSource.some((v) => {
+          if (!v.fieldName || !v.javaFieldName) {
+            this.$message.error('表格红框数据必填');
+            return true;
+          }
+        });
+        this.dataForm.columnPlans = this.tableDataSource;
+        defHttp.post({ url: url, params: this.dataForm }).then(() => {
+          this.$message.success('操作成功');
+          this.handleOkCb();
+          this.visible = false;
+        });
+      },
+    },
+  };
+</script>
