@@ -76,7 +76,7 @@
         </a-col>
         <a-col :md="8">
           <a-form-item
-            :rules="[{ required: true, message: '模板不能为空', whitespace: true }]"
+            :rules="[{ required: true, type: 'number', message: '模板不能为空', whitespace: true }]"
             label="生成模板"
             name="templateType"
           >
@@ -90,13 +90,6 @@
           </a-form-item>
         </a-col>
       </a-row>
-    </a-form>
-    <a-form
-      ref="dataForm"
-      :label-col="this.labelCol"
-      :model="tableDataSource"
-      :wrapper-col="this.wrapperCol"
-    >
       <a-table
         :columns="columns"
         :data-source="tableDataSource"
@@ -333,18 +326,23 @@
         this.$emit('refreshQuery');
       },
       handleOk(url) {
-        // check
-        this.tableDataSource.some((v) => {
-          if (!v.fieldName || !v.javaFieldName) {
-            this.$message.error('表格红框数据必填');
-            return true;
+        this.$refs.dataForm.validate().then(() => {
+          // check
+          const result = this.tableDataSource.some((v) => {
+            if (!v.fieldName || !v.javaFieldName) {
+              this.$message.error('表格红框数据必填');
+              return true;
+            }
+          });
+          if (result) {
+            return;
           }
-        });
-        this.dataForm.columnPlans = this.tableDataSource;
-        defHttp.post({ url: url, params: this.dataForm }).then(() => {
-          this.$message.success('操作成功');
-          this.handleOkCb();
-          this.visible = false;
+          this.dataForm.columnPlans = this.tableDataSource;
+          defHttp.post({ url: url, params: this.dataForm }).then(() => {
+            this.$message.success('操作成功');
+            this.handleOkCb();
+            this.visible = false;
+          });
         });
       },
     },

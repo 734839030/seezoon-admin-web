@@ -112,7 +112,6 @@
       };
     },
     mounted() {
-      this.$refs.dataFormModal.gen('生成', 'sys_login_log');
       this.handleQuery();
     },
   };
