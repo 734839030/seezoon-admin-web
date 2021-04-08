@@ -53,6 +53,8 @@
       >
         <a v-auth="'sys:gen:delete'">删除</a>
       </a-popconfirm>
+      <a-divider type="vertical" />
+      <a v-auth="'sys:gen:generate'" @click="generate(record.id)">生成</a>
     </template>
   </a-table>
   <data-form-modal ref="dataFormModal" @refreshQuery="handleQuery" />
@@ -61,6 +63,8 @@
   import DataFormModal from './DataFormModal.vue';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin.js';
   import { getTables, templateTypesMap } from './data';
+  import { useGlobSetting } from '../../../hooks/setting';
+  import { openWindow } from '../../../utils';
 
   export default {
     name: 'MainTable',
@@ -74,6 +78,10 @@
       return {
         url: '/sys/gen/query',
         columns: [
+          {
+            title: '编号',
+            dataIndex: 'id',
+          },
           {
             title: '表名',
             dataIndex: 'tableName',
@@ -105,7 +113,7 @@
           {
             title: '操作',
             fixed: 'right',
-            width: 120,
+            width: 140,
             slots: { customRender: 'action' },
           },
         ],
@@ -113,6 +121,12 @@
     },
     mounted() {
       this.handleQuery();
+    },
+    methods: {
+      generate(id) {
+        const { apiUrl } = useGlobSetting();
+        openWindow(apiUrl + '/sys/gen/generate/' + id);
+      },
     },
   };
 </script>
