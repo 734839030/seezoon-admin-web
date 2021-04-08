@@ -9,6 +9,9 @@
       <template #title>
         <slot name="title"></slot>
       </template>
+      <template #action>
+        <slot name="action"></slot>
+      </template>
     </CollapseHeader>
 
     <div class="p-2">
@@ -18,6 +21,10 @@
           <slot></slot>
         </div>
       </CollapseTransition>
+    </div>
+
+    <div :class="`${prefixCls}__footer`" v-if="$slots.footer">
+      <slot name="footer"></slot>
     </div>
   </div>
 </template>
@@ -94,7 +101,7 @@
   @prefix-cls: ~'@{namespace}-collapse-container';
 
   .@{prefix-cls} {
-    background: #fff;
+    background: @component-background;
     border-radius: 2px;
     transition: all 0.3s ease-in-out;
 
@@ -104,6 +111,10 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid @border-color-light;
+    }
+
+    &__footer {
+      border-top: 1px solid @border-color-light;
     }
 
     &__action {

@@ -53,7 +53,7 @@
           {{ t('sys.login.mobileSignInFormTitle') }}
         </Button>
       </ACol>
-      <ACol :md="8" :xs="24" class="xs:my-2 md:my-0 xs:mx-0 md:mx-2">
+      <ACol :md="8" :xs="24" class="!my-2 !md:my-0 xs:mx-0 md:mx-2">
         <Button block @click="setLoginState(LoginStateEnum.QR_CODE)">
           {{ t('sys.login.qrSignInFormTitle') }}
         </Button>
@@ -124,7 +124,7 @@
       const { setLoginState, getLoginState } = useLoginState();
       const { getFormRules } = useFormRules();
 
-      const formRef = ref<any>(null);
+      const formRef = ref();
       const loading = ref(false);
       const rememberMe = ref(false);
 

@@ -210,7 +210,7 @@
             props.setFormModel(field, value);
           },
         };
-        const Comp = componentMap.get(component) as typeof defineComponent;
+        const Comp = componentMap.get(component) as ReturnType<typeof defineComponent>;
 
         const { autoSetPlaceHolder, size } = props.formProps;
         const propsData: Recordable = {
@@ -258,7 +258,7 @@
         const { label, helpMessage, helpComponentProps, subLabel } = props.schema;
         const renderLabel = subLabel ? (
           <span>
-            {label} <span style="color:#00000073">{subLabel}</span>
+            {label} <span class="text-secondary">{subLabel}</span>
           </span>
         ) : (
           label
