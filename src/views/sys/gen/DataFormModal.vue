@@ -157,9 +157,15 @@
           <a-select
             v-model:value="tableDataSource[index].dictType"
             :allowClear="true"
-            style="width: 100px"
+            style="width: 140px"
             :options="dictTypes"
             show-search
+            placeholder="可data.ts补全"
+            :disabled="
+              tableDataSource[index].inputType != 'SELECT' &&
+              tableDataSource[index].inputType != 'CHECKBOX' &&
+              tableDataSource[index].inputType != 'RADIO'
+            "
           />
         </template>
         <template #sort="{ index }">
@@ -287,7 +293,7 @@
           {
             title: '字典',
             dataIndex: 'dictType',
-            width: 150,
+            width: 160,
             slots: { customRender: 'dictType' },
           },
           {

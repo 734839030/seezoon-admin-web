@@ -24,8 +24,15 @@
         <a-button
           v-auth="'sys:gen:save'"
           type="default"
-          @click="this.$refs.dataFormModal.gen('生成', searchForm.tableName)"
+          @click="this.$refs.dataFormModal.gen('添加', searchForm.tableName)"
           >添加
+        </a-button>
+        <a-button
+          v-auth="'sys:gen:generate'"
+          :disabled="selectedRowKeys.length == 0"
+          type="default"
+          @click="generate(selectedRowKeys)"
+          >批量生成
         </a-button>
       </a-space>
     </a-form-item>
@@ -37,6 +44,7 @@
     :pagination="pagination"
     :row-key="(record) => record.id"
     bordered
+    :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
     class="mt-4"
     size="small"
     @change="handleTableChange"
@@ -54,7 +62,7 @@
         <a v-auth="'sys:gen:delete'">删除</a>
       </a-popconfirm>
       <a-divider type="vertical" />
-      <a v-auth="'sys:gen:generate'" @click="generate(record.id)">生成</a>
+      <a v-auth="'sys:gen:generate'" @click="generate([record.id])">生成</a>
     </template>
   </a-table>
   <data-form-modal ref="dataFormModal" @refreshQuery="handleQuery" />
@@ -63,8 +71,8 @@
   import DataFormModal from './DataFormModal.vue';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin.js';
   import { getTables, templateTypesMap } from './data';
-  import { useGlobSetting } from '../../../hooks/setting';
-  import { openWindow } from '../../../utils';
+  import { defHttp } from '../../../utils/http/axios';
+  import { message } from 'ant-design-vue';
 
   export default {
     name: 'MainTable',
@@ -77,6 +85,7 @@
     data() {
       return {
         url: '/sys/gen/query',
+        selectedRowKeys: [],
         columns: [
           {
             title: '编号',
@@ -123,9 +132,38 @@
       this.handleQuery();
     },
     methods: {
-      generate(id) {
-        const { apiUrl } = useGlobSetting();
-        openWindow(apiUrl + '/sys/gen/generate/' + id);
+      onSelectChange(selectedRowKeys) {
+        this.selectedRowKeys = selectedRowKeys;
+      },
+      generate(ids) {
+        defHttp
+          .post(
+            { url: '/sys/gen/generate', params: ids, responseType: 'blob' },
+            { isTransformResponse: false }
+          )
+          .then((res) => {
+            //var blob = new Blob([res.data], { type: res.headers['content-type'] });
+            var blob = res.data;
+            if (blob.type == 'application/json') {
+              const reader = new FileReader();
+              reader.readAsText(blob, 'utf-8');
+              reader.onload = function () {
+                const err = JSON.parse(reader.result);
+                message.error(err.msg);
+              };
+              return;
+            }
+            var downloadElement = document.createElement('a');
+            var href = window.URL.createObjectURL(blob); //创建下载的链接
+            downloadElement.href = href;
+            downloadElement.download = decodeURI(
+              res.headers['content-disposition'].substring('attachment;filename='.length)
+            ); //下载后文件名
+            document.body.appendChild(downloadElement);
+            downloadElement.click(); //点击下载
+            document.body.removeChild(downloadElement); //下载完成移除元素
+            window.URL.revokeObjectURL(href); //释放掉blob对象
+          });
       },
     },
   };
