@@ -44,11 +44,12 @@ export const inputTypeDicts: Dict[] = [
   { label: '不涉及', value: 'NONE' },
   { label: '文本框', value: 'TEXT' },
   { label: '下拉框', value: 'SELECT' },
+  { label: '下拉多选', value: 'SELECT_MULTIPLE' }, // 组件 tags 模式，分词多选
   { label: '隐藏域', value: 'HIDDEN' },
   { label: '整数', value: 'INTEGRAL_NUMBER' },
   { label: '小数', value: 'DECIMAL' },
   { label: '单选', value: 'RADIO' },
-  { label: '多选', value: 'CHECKBOX' },
+  { label: '复选框', value: 'CHECKBOX' },
   { label: '日期', value: 'DATE' },
   { label: '时间', value: 'DATETIME' },
   { label: '文本域', value: 'TEXTAREA' },

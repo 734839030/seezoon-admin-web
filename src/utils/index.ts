@@ -1,6 +1,7 @@
 import type { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
 import { unref } from 'vue';
 import { isObject } from '/@/utils/is';
+import { message } from 'ant-design-vue';
 
 export const noop = () => {};
 
@@ -50,7 +51,28 @@ export function openWindow(
 
   window.open(url, target, feature.join(','));
 }
-
+// ajax 下载
+export function blobDown(blob: Blob, fileName: string) {
+  debugger;
+  // 下载流错误时候 服务端统一返回的json错误信息
+  if (blob.type == 'application/json') {
+    const reader = new FileReader();
+    reader.readAsText(blob, 'utf-8');
+    reader.onload = function () {
+      const err = JSON.parse(reader.result as string);
+      message.error(err.msg);
+    };
+    return;
+  }
+  const downloadElement = document.createElement('a');
+  const href = window.URL.createObjectURL(blob); //创建下载的链接
+  downloadElement.href = href;
+  downloadElement.download = fileName; //下载后文件名
+  document.body.appendChild(downloadElement);
+  downloadElement.click(); //点击下载
+  document.body.removeChild(downloadElement); //下载完成移除元素
+  window.URL.revokeObjectURL(href); //释放掉blob对象
+}
 // dynamic use hook props
 export function getDynamicProps<T, U>(props: T): Partial<U> {
   const ret: Recordable = {};

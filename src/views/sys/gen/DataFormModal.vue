@@ -2,10 +2,10 @@
   <a-drawer
     v-model:visible="visible"
     :destroyOnClose="true"
-    :height="this.height"
+    :height="'80%'"
     :maskClosable="false"
     :title="title"
-    :width="1200"
+    :width="'80%'"
   >
     <a-form
       ref="dataForm"
@@ -90,6 +90,12 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-alert type="info" closable>
+        <template #message>
+          当表单类型选择<a-typography-text type="danger">复选框</a-typography-text>
+          时，生成后的代码需要手动梳理该字段从前端->后台->DB逻辑，因为前端是个数组，后端是一个字段，无法生成预期增删改查代码。
+        </template>
+      </a-alert>
       <a-table
         :columns="columns"
         :data-source="tableDataSource"
@@ -130,12 +136,21 @@
         </template>
         <template #list|sortable="{ index }">
           <a-divider type="vertical" :dashed="true" />
-          <a-checkbox v-model:checked="tableDataSource[index].list" />
+          <a-checkbox
+            v-model:checked="tableDataSource[index].list"
+            :disabled="!this.allowSearchAndListAndSortable(index)"
+          />
           <a-divider type="vertical" />
-          <a-checkbox v-model:checked="tableDataSource[index].sortable" />
+          <a-checkbox
+            v-model:checked="tableDataSource[index].sortable"
+            :disabled="!this.allowSearchAndListAndSortable(index)"
+          />
         </template>
         <template #search="{ index }">
-          <a-checkbox v-model:checked="tableDataSource[index].search" />
+          <a-checkbox
+            v-model:checked="tableDataSource[index].search"
+            :disabled="!this.allowSearchAndListAndSortable(index)"
+          />
         </template>
         <template #queryType="{ index }">
           <a-select
@@ -143,13 +158,14 @@
             :allowClear="true"
             style="width: 100px"
             :options="queryTypeDicts"
+            :disabled="!this.allowSearchAndListAndSortable(index)"
           />
         </template>
         <template #inputType="{ index }">
           <a-select
             v-model:value="tableDataSource[index].inputType"
             :allowClear="true"
-            style="width: 90px"
+            style="width: 110px"
             :options="inputTypeDicts"
           />
         </template>
@@ -162,9 +178,9 @@
             show-search
             placeholder="可data.ts补全"
             :disabled="
-              tableDataSource[index].inputType != 'SELECT' &&
-              tableDataSource[index].inputType != 'CHECKBOX' &&
-              tableDataSource[index].inputType != 'RADIO'
+              !['SELECT', 'SELECT_MULTIPLE', 'CHECKBOX', 'RADIO'].includes(
+                tableDataSource[index].inputType
+              )
             "
           />
         </template>
@@ -307,6 +323,9 @@
       };
     },
     methods: {
+      allowSearchAndListAndSortable(index) {
+        return !['RICH_TEXT', 'IMAGE', 'FILE'].includes(this.tableDataSource[index].inputType);
+      },
       edit(title, id) {
         this.visible = true;
         this.title = title;

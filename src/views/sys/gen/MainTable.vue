@@ -72,7 +72,7 @@
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin.js';
   import { getTables, templateTypesMap } from './data';
   import { defHttp } from '../../../utils/http/axios';
-  import { message } from 'ant-design-vue';
+  import { blobDown } from '../../../utils';
 
   export default {
     name: 'MainTable',
@@ -135,6 +135,12 @@
       onSelectChange(selectedRowKeys) {
         this.selectedRowKeys = selectedRowKeys;
       },
+      handleDeleteCb(id) {
+        const index = this.selectedRowKeys.indexOf(id);
+        if (index >= 0) {
+          this.selectedRowKeys.splice(index, 1);
+        }
+      },
       generate(ids) {
         defHttp
           .post(
@@ -143,26 +149,13 @@
           )
           .then((res) => {
             //var blob = new Blob([res.data], { type: res.headers['content-type'] });
-            var blob = res.data;
-            if (blob.type == 'application/json') {
-              const reader = new FileReader();
-              reader.readAsText(blob, 'utf-8');
-              reader.onload = function () {
-                const err = JSON.parse(reader.result);
-                message.error(err.msg);
-              };
-              return;
-            }
-            var downloadElement = document.createElement('a');
-            var href = window.URL.createObjectURL(blob); //创建下载的链接
-            downloadElement.href = href;
-            downloadElement.download = decodeURI(
-              res.headers['content-disposition'].substring('attachment;filename='.length)
-            ); //下载后文件名
-            document.body.appendChild(downloadElement);
-            downloadElement.click(); //点击下载
-            document.body.removeChild(downloadElement); //下载完成移除元素
-            window.URL.revokeObjectURL(href); //释放掉blob对象
+            const blob = res.data;
+            blobDown(
+              blob,
+              decodeURI(
+                res?.headers['content-disposition']?.substring('attachment;filename='.length)
+              )
+            );
           });
       },
     },
