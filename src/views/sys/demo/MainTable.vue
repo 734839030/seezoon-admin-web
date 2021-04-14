@@ -37,6 +37,14 @@
     <a-form-item label="小数" name="inputXiaoshu">
       <a-input-number v-model:value="searchForm.inputXiaoshu" :precision="2" />
     </a-form-item>
+    <a-form-item label="日期" name="createTime">
+      <a-date-picker
+        v-model:value="searchForm.createTime"
+        :showTime="true"
+        valueFormat="YYYY-MM-DD HH:mm:ss"
+      />
+    </a-form-item>
+
     <a-form-item label="日期" name="inputDateRange">
       <a-range-picker
         v-model:value="searchForm.inputDateRange"

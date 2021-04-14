@@ -28,7 +28,7 @@ export const templateTypes: Dict[] = [
 export const templateTypesMap = dictArray2Map(templateTypes);
 
 export const queryTypeDicts: Dict[] = [
-  { label: '不涉及', value: 'NONE' },
+  { label: 'none', value: 'NONE' },
   { label: '=', value: 'EQUAL' },
   { label: '!=', value: 'NOT_EQUAL' },
   { label: '>=', value: 'GREATER_EQUAL' },
@@ -41,7 +41,7 @@ export const queryTypeDicts: Dict[] = [
 ];
 
 export const inputTypeDicts: Dict[] = [
-  { label: '不涉及', value: 'NONE' },
+  { label: 'none', value: 'NONE' },
   { label: '文本框', value: 'TEXT' },
   { label: '下拉框', value: 'SELECT' },
   { label: '下拉多选', value: 'SELECT_MULTIPLE' }, // 组件 tags 模式，分词多选

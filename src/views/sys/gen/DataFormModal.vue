@@ -124,6 +124,7 @@
             :style="{ border: tableDataSource[index].javaFieldName ? '' : '1px solid red' }"
             v-model:value="tableDataSource[index].javaFieldName"
             :maxlength="20"
+            :disabled="tableDataSource[index].defaultField"
           />
         </template>
         <template #nullable|insert|update="{ index }">
@@ -147,10 +148,15 @@
           />
         </template>
         <template #search="{ index }">
-          <a-checkbox
-            v-model:checked="tableDataSource[index].search"
-            :disabled="!this.allowSearchAndListAndSortable(index)"
-          />
+          <a-tooltip placement="top">
+            <template #title>
+              <span>配合查询方式</span>
+            </template>
+            <a-checkbox
+              v-model:checked="tableDataSource[index].search"
+              :disabled="!this.allowSearchAndListAndSortable(index)"
+            />
+          </a-tooltip>
         </template>
         <template #queryType="{ index }">
           <a-select
@@ -177,11 +183,7 @@
             :options="dictTypes"
             show-search
             placeholder="可data.ts补全"
-            :disabled="
-              !['SELECT', 'SELECT_MULTIPLE', 'CHECKBOX', 'RADIO'].includes(
-                tableDataSource[index].inputType
-              )
-            "
+            :disabled="!tableDataSource[index].dictField"
           />
         </template>
         <template #sort="{ index }">
@@ -247,7 +249,7 @@
           {
             title: '列名',
             dataIndex: 'dbColumnName',
-            width: 100,
+            width: 130,
             ellipsis: true,
             fixed: 'left',
           },
