@@ -1,10 +1,10 @@
 <template>
-  <Dropdown :overlayClassName="`${prefixCls}-dropdown-overlay`" placement="bottomLeft">
+  <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getUserInfo.photoUrl || headerImg" />
+      <img :class="`${prefixCls}__header`" :src="userInfo.photoUrl || headerImg" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
-          {{ getUserInfo.name }}
+          {{ userInfo.name }}
         </span>
       </span>
     </span>
@@ -46,7 +46,7 @@
 
   import { DOC_URL } from '/@/settings/siteSetting';
 
-  import { userStore } from '/@/store/modules/user';
+  import { useUserStore } from '/@/store/modules/user';
   import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDesign } from '/@/hooks/web/useDesign';
@@ -77,9 +77,10 @@
       const { prefixCls } = useDesign('header-user-dropdown');
       const { t } = useI18n();
       const { getShowDoc } = useHeaderSetting();
+      const userStore = useUserStore();
 
-      const getUserInfo = computed(() => {
-        const { name = '', desc, photoUrl } = userStore.getUserInfoState || {};
+      const userInfo = computed(() => {
+        const { name = '', desc, photoUrl } = userStore.getUserInfo || {};
         return { name, desc, photoUrl };
       });
       const [register, { openModal }] = useModal();
@@ -121,7 +122,7 @@
         userCenterModalRef,
         prefixCls,
         t,
-        getUserInfo,
+        userInfo,
         handleMenuClick,
         getShowDoc,
         headerImg,
@@ -158,7 +159,7 @@
 
     &--dark {
       &:hover {
-        background: @header-dark-bg-hover-color;
+        background-color: @header-dark-bg-hover-color;
       }
     }
 

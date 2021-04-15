@@ -18,6 +18,8 @@ export const DICT_KEY = 'DICT__KEY__';
 // lock info
 export const LOCK_INFO_KEY = 'LOCK__INFO__KEY__';
 
+export const MULTIPLE_TABS_KEY = 'MULTIPLE_TABS__KEY__';
+
 export const APP_DARK_MODE_KEY_ = '__APP__DARK__MODE__';
 
 // base global local key
