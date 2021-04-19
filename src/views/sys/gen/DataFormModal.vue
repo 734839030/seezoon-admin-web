@@ -82,53 +82,56 @@
           >
             <a-select
               v-model:value="dataForm.templateType"
-              style="width: 200px"
               :allowClear="true"
               :options="templateTypes"
               placeholder="请选择下拉数据"
+              style="width: 200px"
             />
           </a-form-item>
         </a-col>
       </a-row>
-      <a-alert type="info" closable>
+      <a-alert closable type="info">
         <template #message>
-          当表单类型选择<a-typography-text type="danger">复选框</a-typography-text>
+          当表单类型选择
+          <a-typography-text type="danger">复选框</a-typography-text>
           时，生成后的代码需要手动梳理该字段从前端->后台->DB逻辑，因为前端是个数组，后端是一个字段，无法生成预期增删改查代码。
         </template>
       </a-alert>
       <a-table
         :columns="columns"
         :data-source="tableDataSource"
-        :row-key="(record) => record.dbColumnName"
-        bordered
         :pagination="false"
+        :row-key="(record) => record.dbColumnName"
         :scroll="{ y: 500, x: 1200 }"
+        bordered
         class="mt-4"
       >
         <template #fieldNameTitle>
-          <a-typography-text type="danger">*</a-typography-text>字段名</template
-        >
+          <a-typography-text type="danger">*</a-typography-text>
+          字段名
+        </template>
         <template #javaFieldNameTitle>
-          <a-typography-text type="danger">*</a-typography-text>Java字段名</template
-        >
+          <a-typography-text type="danger">*</a-typography-text>
+          Java字段名
+        </template>
         <template #fieldName="{ index }">
           <a-input
-            :style="{ border: tableDataSource[index].fieldName ? '' : '1px solid red' }"
             v-model:value="tableDataSource[index].fieldName"
             :maxlength="6"
+            :style="{ border: tableDataSource[index].fieldName ? '' : '1px solid red' }"
             placeholder="最长6"
           />
         </template>
         <template #javaFieldName="{ index }">
           <a-input
-            :style="{ border: tableDataSource[index].javaFieldName ? '' : '1px solid red' }"
             v-model:value="tableDataSource[index].javaFieldName"
-            :maxlength="20"
             :disabled="tableDataSource[index].defaultField"
+            :maxlength="20"
+            :style="{ border: tableDataSource[index].javaFieldName ? '' : '1px solid red' }"
           />
         </template>
         <template #nullable|insert|update="{ index }">
-          <a-divider type="vertical" :dashed="true" />
+          <a-divider :dashed="true" type="vertical" />
           <a-checkbox v-model:checked="tableDataSource[index].nullable" />
           <a-divider type="vertical" />
           <a-checkbox v-model:checked="tableDataSource[index].insert" />
@@ -136,7 +139,7 @@
           <a-checkbox v-model:checked="tableDataSource[index].update" />
         </template>
         <template #list|sortable="{ index }">
-          <a-divider type="vertical" :dashed="true" />
+          <a-divider :dashed="true" type="vertical" />
           <a-checkbox
             v-model:checked="tableDataSource[index].list"
             :disabled="!this.allowSearchAndListAndSortable(index)"
@@ -162,36 +165,36 @@
           <a-select
             v-model:value="tableDataSource[index].queryType"
             :allowClear="true"
-            style="width: 100px"
-            :options="queryTypeDicts"
             :disabled="!this.allowSearchAndListAndSortable(index)"
+            :options="queryTypeDicts"
+            style="width: 100px"
           />
         </template>
         <template #inputType="{ index }">
           <a-select
             v-model:value="tableDataSource[index].inputType"
             :allowClear="true"
-            style="width: 110px"
             :options="inputTypeDicts"
+            style="width: 110px"
           />
         </template>
         <template #dictType="{ index }">
           <a-select
             v-model:value="tableDataSource[index].dictType"
             :allowClear="true"
-            style="width: 140px"
-            :options="dictTypes"
-            show-search
-            placeholder="可data.ts补全"
             :disabled="!tableDataSource[index].dictField"
+            :options="dictTypes"
+            placeholder="可data.ts补全"
+            show-search
+            style="width: 140px"
           />
         </template>
         <template #sort="{ index }">
           <a-input-number
-            :style="{ border: tableDataSource[index].sort != null ? '' : '1px solid red' }"
             v-model:value="tableDataSource[index].sort"
             :maxlength="20"
             :step="10"
+            :style="{ border: tableDataSource[index].sort != null ? '' : '1px solid red' }"
             placeholder="升序"
           />
         </template>
@@ -219,8 +222,8 @@
             this.dataForm.id === undefined ? '/sys/gen/save' : '/sys/gen/update/' + this.dataForm.id
           )
         "
-        >保存</a-button
-      >
+        >保存
+      </a-button>
     </div>
   </a-drawer>
 </template>
@@ -228,7 +231,7 @@
 <script>
   import { dataFormModalMixin } from '../../../mixins/common/data-form-mixin-modal.js';
   import { defHttp } from '../../../utils/http/axios';
-  import { templateTypes, queryTypeDicts, inputTypeDicts } from './data';
+  import { inputTypeDicts, queryTypeDicts, templateTypes } from './data';
   import { onMounted, ref } from 'vue';
   import { getTypes } from '../../../api/sys';
 
@@ -327,6 +330,11 @@
     methods: {
       allowSearchAndListAndSortable(index) {
         return !['RICH_TEXT', 'IMAGE', 'FILE'].includes(this.tableDataSource[index].inputType);
+      },
+      dictField(index) {
+        return !['SELECT', 'SELECT_MULTIPLE', 'RADIO', 'CHECKBOX'].includes(
+          this.tableDataSource[index].inputType
+        );
       },
       edit(title, id) {
         this.visible = true;
