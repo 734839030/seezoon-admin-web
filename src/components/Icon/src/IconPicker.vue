@@ -33,6 +33,7 @@
                   :class="currentSelect === icon ? 'border border-primary' : ''"
                   class="p-2 w-1/8 cursor-pointer mr-1 mt-1 flex justify-center items-center border border-solid hover:border-primary"
                   @click="handleClick(icon)"
+                  :title="icon"
                 >
                   <!-- <Icon :icon="icon" :prefix="prefix" /> -->
                   <SvgIcon v-if="isSvgMode" :name="icon" />
@@ -77,7 +78,8 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import svgIcons from 'vite-plugin-svg-icons/client';
+  import svgIcons from 'virtual:svg-icons-names';
+
   function getIcons() {
     const data = iconsData as any;
     const prefix: string = data?.prefix ?? '';
