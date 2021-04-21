@@ -182,7 +182,7 @@
           <a-select
             v-model:value="tableDataSource[index].dictType"
             :allowClear="true"
-            :disabled="!tableDataSource[index].dictField"
+            :disabled="!dictField(index)"
             :options="dictTypes"
             placeholder="可data.ts补全"
             show-search
@@ -332,7 +332,7 @@
         return !['RICH_TEXT', 'IMAGE', 'FILE'].includes(this.tableDataSource[index].inputType);
       },
       dictField(index) {
-        return !['SELECT', 'SELECT_MULTIPLE', 'RADIO', 'CHECKBOX'].includes(
+        return ['SELECT', 'SELECT_MULTIPLE', 'RADIO', 'CHECKBOX'].includes(
           this.tableDataSource[index].inputType
         );
       },

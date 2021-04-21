@@ -6,6 +6,7 @@
     :model="searchForm"
     :wrapperCol="this.wrapperCol"
     layout="inline"
+    labelAlign="left"
   >
     <a-form-item label="登录名" name="username">
       <a-input v-model:value="searchForm.username" :maxlength="50" placeholder="请输入登录名" />
@@ -37,6 +38,9 @@
           @click="this.$refs.dataFormModal.open('添加')"
           >添加
         </a-button>
+        <a-button v-auth="'sys:user:unlock'" type="primary" @click="this.$refs.unlockModal.open()"
+          >解锁</a-button
+        >
       </a-space>
     </a-form-item>
   </a-form>
@@ -83,15 +87,17 @@
     </a-col>
   </a-row>
   <data-form-modal ref="dataFormModal" @refreshQuery="handleQuery" />
+  <unlock-modal ref="unlockModal" />
 </template>
 <script>
   import DataFormModal from './DataFormModal.vue';
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin';
   import { deptTreeSelectMixin } from '../../../mixins/sys/dept-tree-select-mixin';
+  import UnlockModal from './UnlockModal.vue';
 
   export default {
     name: 'MainTable',
-    components: { DataFormModal },
+    components: { DataFormModal, UnlockModal },
     mixins: [queryTableMixin, deptTreeSelectMixin],
     data() {
       return {

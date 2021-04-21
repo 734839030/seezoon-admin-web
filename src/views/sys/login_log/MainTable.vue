@@ -9,13 +9,13 @@
     layout="inline"
   >
     <a-row>
-      <a-col :md="6" :xs="24">
+      <a-col :md="5" :xs="24">
         <a-form-item label="登录账号" name="userName">
           <a-input v-model:value="searchForm.userName" :maxlength="50" placeholder="" />
         </a-form-item>
       </a-col>
-      <a-col :md="6" :xs="24"
-        ><a-form-item label="登录结果" name="result">
+      <a-col :md="5" :xs="24">
+        <a-form-item label="登录结果" name="result">
           <a-select
             v-model:value="searchForm.result"
             :allowClear="true"
@@ -25,9 +25,14 @@
           />
         </a-form-item>
       </a-col>
-      <a-col :md="6" :xs="24">
-        <a-form-item label="登录时间" name="loginTime">
-          <a-date-picker v-model:value="searchForm.loginTime" valueFormat="YYYY-MM-DD" />
+      <a-col :md="8" :xs="24">
+        <a-form-item label="登录时间" name="loginDateRange">
+          <a-range-picker
+            v-model:value="searchForm.loginDateRange"
+            :allowClear="false"
+            valueFormat="YYYY-MM-DD"
+            style="width: 220px"
+          />
         </a-form-item>
       </a-col>
       <a-col :md="6" :xs="24">
@@ -85,6 +90,7 @@
   import { queryTableMixin } from '../../../mixins/common/query-table-mixin';
   import { resultDicts, resultDictsMap } from './data.ts';
   import { openWindow } from '../../../utils';
+  import moment from 'moment';
 
   export default {
     name: 'MainTable',
@@ -94,6 +100,9 @@
     },
     data() {
       return {
+        searchForm: {
+          loginDateRange: [moment().day(-7).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')],
+        },
         url: '/sys/login_log/query',
         columns: [
           {
@@ -104,18 +113,22 @@
           {
             title: '登录结果',
             dataIndex: 'result',
+            width: 120,
             ellipsis: true,
             slots: { customRender: 'result' },
           },
           {
             title: '登录时间',
             dataIndex: 'loginTime',
-            width: 120,
+            width: 180,
+            ellipsis: true,
+            sorter: true,
           },
           {
             title: 'IP地址',
             dataIndex: 'ip',
-            width: 120,
+            width: 140,
+            ellipsis: true,
           },
           {
             title: '地区',
