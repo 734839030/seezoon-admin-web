@@ -1,13 +1,33 @@
 <template>
   <div class="p-4">
     <GrowCard :loading="loading" class="enter-y" />
-    <SiteAnalysis class="!my-4 enter-y" :loading="loading" />
+
+    <!-- 固定广告 -->
+    <ins
+      class="adsbygoogle"
+      data-ad-client="ca-pub-5032572591927756"
+      data-ad-format="auto"
+      data-ad-slot="7700202835"
+      data-full-width-responsive="true"
+      style="display: block"
+    ></ins>
+
+    <SiteAnalysis :loading="loading" class="!my-4 enter-y" />
+    <!-- 固定广告 -->
+    <ins
+      class="adsbygoogle"
+      data-ad-client="ca-pub-5032572591927756"
+      data-ad-format="auto"
+      data-ad-slot="7700202835"
+      data-full-width-responsive="true"
+      style="display: block"
+    ></ins>
 
     <div class="md:flex enter-y">
-      <VisitRadar class="md:w-1/3 w-full" :loading="loading" />
+      <VisitRadar :loading="loading" class="md:w-1/3 w-full" />
 
-      <VisitSource class="md:w-1/3 !md:mx-4 !md:my-0 !my-4 w-full" :loading="loading" />
-      <SalesProductPie class="md:w-1/3 w-full" :loading="loading" />
+      <VisitSource :loading="loading" class="md:w-1/3 !md:mx-4 !md:my-0 !my-4 w-full" />
+      <SalesProductPie :loading="loading" class="md:w-1/3 w-full" />
     </div>
   </div>
 </template>
