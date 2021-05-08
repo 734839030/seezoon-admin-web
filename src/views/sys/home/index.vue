@@ -2,26 +2,9 @@
   <div class="p-4">
     <GrowCard :loading="loading" class="enter-y" />
 
-    <!-- 固定广告 -->
-    <ins
-      class="adsbygoogle"
-      data-ad-client="ca-pub-5032572591927756"
-      data-ad-format="auto"
-      data-ad-slot="7700202835"
-      data-full-width-responsive="true"
-      style="display: block"
-    ></ins>
+    <div id="adsgoeshere" v-html="adsenseContent"></div>
 
     <SiteAnalysis :loading="loading" class="!my-4 enter-y" />
-    <!-- 固定广告 -->
-    <ins
-      class="adsbygoogle"
-      data-ad-client="ca-pub-5032572591927756"
-      data-ad-format="auto"
-      data-ad-slot="7700202835"
-      data-full-width-responsive="true"
-      style="display: block"
-    ></ins>
 
     <div class="md:flex enter-y">
       <VisitRadar :loading="loading" class="md:w-1/3 w-full" />
@@ -54,6 +37,14 @@
         loading.value = false;
       }, 1500);
       return { loading };
+    },
+    data() {
+      return {
+        adsenseContent: '',
+      };
+    },
+    mounted() {
+      this.adsenseContent = document.getElementById('divadsensedisplaynone')?.innerHTML as string;
     },
   });
 </script>
