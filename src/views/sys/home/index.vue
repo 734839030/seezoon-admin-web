@@ -2,8 +2,6 @@
   <div class="p-4">
     <GrowCard :loading="loading" class="enter-y" />
 
-    <div id="adsgoeshere" v-html="adsenseContent"></div>
-
     <SiteAnalysis :loading="loading" class="!my-4 enter-y" />
 
     <div class="md:flex enter-y">
@@ -37,14 +35,6 @@
         loading.value = false;
       }, 1500);
       return { loading };
-    },
-    data() {
-      return {
-        adsenseContent: '',
-      };
-    },
-    mounted() {
-      this.adsenseContent = document.getElementById('divadsensedisplaynone')?.innerHTML as string;
     },
   });
 </script>
