@@ -21,6 +21,7 @@
   import SalesProductPie from './components/SalesProductPie.vue';
 
   export default defineComponent({
+    name: 'SysHome',
     components: {
       GrowCard,
       SiteAnalysis,
