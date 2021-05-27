@@ -53,7 +53,6 @@ export function openWindow(
 }
 // ajax 下载
 export function blobDown(blob: Blob, fileName: string) {
-  debugger;
   // 下载流错误时候 服务端统一返回的json错误信息
   if (blob.type == 'application/json') {
     const reader = new FileReader();
