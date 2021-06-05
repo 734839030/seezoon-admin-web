@@ -95,9 +95,8 @@
   .@{prefix-cls} {
     &__entry {
       position: relative;
-      //height: 240px;
-      padding: 130px 30px 60px 30px;
-      margin-top: 25px;
+      height: 260px;
+      padding: 100px 30px 0px 30px;
       border-radius: 10px;
     }
 
