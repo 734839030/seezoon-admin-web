@@ -102,7 +102,7 @@
 
     &__header {
       position: absolute;
-      top: 0;
+      top: 10px;
       left: calc(50% - 45px);
       width: auto;
       text-align: center;
