@@ -3,6 +3,7 @@
     v-bind="$attrs"
     :class="prefixCls"
     :footer="null"
+    :canFullscreen="false"
     :title="t('layout.header.lockScreen')"
     @register="register"
   >
