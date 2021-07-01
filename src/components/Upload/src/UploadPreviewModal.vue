@@ -12,22 +12,19 @@
 </template>
 <script lang="ts">
   import { defineComponent, watch, ref } from 'vue';
-
   //   import { BasicTable, useTable } from '/@/components/Table';
-  import FileList from './FileList';
-
+  import FileList from './FileList.vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { previewProps } from './props';
-  import { PreviewFileItem } from './types';
+  import { PreviewFileItem } from './typing';
   import { downloadByUrl } from '/@/utils/file/download';
-
   import { createPreviewColumns, createPreviewActionColumn } from './data';
-
   import { useI18n } from '/@/hooks/web/useI18n';
+
   export default defineComponent({
     components: { BasicModal, FileList },
     props: previewProps,
-    emits: ['list-change', 'register'],
+    emits: ['list-change', 'register', 'delete'],
     setup(props, { emit }) {
       const [register, { closeModal }] = useModalInner();
       const { t } = useI18n();
@@ -53,7 +50,8 @@
       function handleRemove(record: PreviewFileItem) {
         const index = fileListRef.value.findIndex((item) => item.url === record.url);
         if (index !== -1) {
-          fileListRef.value.splice(index, 1);
+          const removed = fileListRef.value.splice(index, 1);
+          emit('delete', removed[0].url);
           emit(
             'list-change',
             fileListRef.value.map((item) => item.url)

@@ -22,7 +22,7 @@
         v-model:value="searchForm.status"
         :allowClear="true"
         placeholder="请选择状态"
-        style="width: 120px"
+        style="width: 80px"
       >
         <a-select-option :value="1">正常</a-select-option>
         <a-select-option :value="0">禁用</a-select-option>
