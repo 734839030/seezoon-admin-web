@@ -22,7 +22,6 @@ module.exports = defineConfig({
     'plugin:@typescript-eslint/recommended',
     'prettier',
     'plugin:prettier/recommended',
-    'plugin:jest/recommended',
   ],
   rules: {
     '@typescript-eslint/ban-ts-ignore': 'off',
@@ -61,6 +60,7 @@ module.exports = defineConfig({
     'vue/singleline-html-element-content-newline': 'off',
     'vue/attribute-hyphenation': 'off',
     'vue/require-default-prop': 'off',
+    'vue/script-setup-uses-vars': 'off',
     'vue/html-self-closing': [
       'error',
       {

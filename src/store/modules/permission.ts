@@ -47,16 +47,16 @@ export const usePermissionStore = defineStore({
     backMenuList: [],
   }),
   getters: {
-    getPermCodeList(): string[]|number[]{
+    getPermCodeList(): string[] | number[] {
       return this.permCodeList;
     },
-    getBackMenuList():Menu[] {
+    getBackMenuList(): Menu[] {
       return this.backMenuList;
     },
-    getLastBuildMenuTime():number{
+    getLastBuildMenuTime(): number {
       return this.lastBuildMenuTime;
     },
-    getIsDynamicAddedRoute(): boolean{
+    getIsDynamicAddedRoute(): boolean {
       return this.isDynamicAddedRoute;
     },
   },
