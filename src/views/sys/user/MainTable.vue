@@ -22,7 +22,7 @@
         v-model:value="searchForm.status"
         :allowClear="true"
         placeholder="请选择状态"
-        style="width: 80px"
+        style="width: 120px"
       >
         <a-select-option :value="1">正常</a-select-option>
         <a-select-option :value="0">禁用</a-select-option>
@@ -165,6 +165,7 @@
     methods: {
       onDeptTreeSelect(selectedKeys, { node }) {
         this.searchForm.deptId = node.selected ? undefined : node.dataRef.value;
+        this.$refs.dataFormModal.dataForm.deptId = node.selected ? undefined : node.dataRef.value;
         this.handleQuery();
       },
     },

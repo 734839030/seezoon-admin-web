@@ -3,19 +3,14 @@
     v-model:visible="visible"
     :confirm-loading="confirmLoading"
     :destroyOnClose="true"
-    :height="this.height"
+    :height="height"
     :maskClosable="false"
     :title="title"
-    :width="this.width"
+    :width="width"
     okText="保存"
-    @ok="handleOk(this.dataForm.id === undefined ? '/sys/user/save' : '/sys/user/update')"
+    @ok="handleOk(dataForm.id === undefined ? '/sys/user/save' : '/sys/user/update')"
   >
-    <a-form
-      ref="dataForm"
-      :label-col="this.labelCol"
-      :model="dataForm"
-      :wrapper-col="this.wrapperCol"
-    >
+    <a-form ref="dataForm" :label-col="labelCol" :model="dataForm" :wrapper-col="wrapperCol">
       <a-input v-model:value="dataForm.id" type="hidden" />
       <a-row>
         <a-col :md="12" :xs="24">
@@ -251,7 +246,11 @@
             this.dataForm = data;
           });
         } else {
-          this.dataForm = { status: 1 };
+          let data = { status: 1 };
+          if (undefined !== this.dataForm.deptId) {
+            data.deptId = this.dataForm.deptId;
+          }
+          this.dataForm = data;
         }
       },
       // 保存后回调
